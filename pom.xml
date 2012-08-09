@@ -52,6 +52,13 @@
       <version>3.1.2.RELEASE</version>
       <scope>compile</scope>
     </dependency>
+    <!-- Provided dependencies -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+    </dependency>
     <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>
@@ -70,6 +77,12 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>3.1.2.RELEASE</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency><!-- Required for @Configuration -->
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
+      <version>2.2</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
