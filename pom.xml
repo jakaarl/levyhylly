@@ -73,12 +73,6 @@
       <scope>test</scope>
     </dependency>
     <!-- Runtime dependencies -->
-    <!-- <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>3.1.2.RELEASE</version>
-      <scope>runtime</scope>
-    </dependency> -->
     <dependency><!-- Required for @Configuration -->
       <groupId>cglib</groupId>
       <artifactId>cglib-nodep</artifactId>
