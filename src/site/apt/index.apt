@@ -1,0 +1,46 @@
+Johdanto
+
+ Levyhylly on sovellus musiikkikokoelman selaamiseen ja ylläpitoon.
+ 
+* Toiminnallisuus
+
+ * Kirjautuminen hallinnointikäyttäjäksi
+ 
+ * Selaaminen anonyymina (ei kirjautunut käyttäjä)
+ 
+ * Kokoelman artistien tai albumien selaaminen
+ 
+ * Navigointi artistista albumeihin, albumista artistiin
+ 
+ * Artistinäyttö, joka listaa artistin albumit
+ 
+ * Albuminäyttö, joka listaa albumin perustiedot ja kappaleet
+ 
+ * Haku artistin, albumin tai kappaleen nimellä
+ 
+ * Artistien, albumien ja kappaleiden lisäys, muokkaus ja poisto (hallinnointikäyttäjä)
+
+* Lisätoiminnallisuus
+
+ Aikabudjetin salliessa voidaan toteuttaa lisätoiminnallisuuksia, kuten:
+ 
+ * Käyttöliittymän kielistäminen
+ 
+ * Ei-anonyymit käyttäjät, joilla personointia: kieli, suosikit
+ 
+ * Kokoelman tuominen tietokantaan (hakemistorakenteen tai ID-tagien pohjalta)
+ 
+* Teknologia
+
+ Sovelluksen toteutuskieli on Java. Ajoympäristöksi vaaditaan suhteellisen tuore
+ sovelluspalvelin (Servlet 2.5 tai korkeampi). Tietokantaa ei kehitysvaiheessa ole
+ lyöty lukkoon - pyrkimyksenä on kirjoittaa mahdollisimman yhteensopivaa SQL:ää ja
+ käyttää kehityskantana HSQLDB:tä. Sovellus toteutetaan hyödyntäen Spring MVC:tä
+ (versio 3.1.x tai korkeampi).
+
+Käyttötapaukset
+
+Tietomalli
+
+Luokkakaavio
+

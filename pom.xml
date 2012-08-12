@@ -6,6 +6,7 @@
   <packaging>war</packaging>
   <name>Levyhylly</name>
   <description>A music collection application.</description>
+  <url>http://killnine.kapsi.fi/levyhylly</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -42,6 +43,18 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.1</version>
+        <dependencies>
+          <dependency><!-- add support for ssh/scp -->
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <version>1.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -49,6 +62,12 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
+      <version>3.1.2.RELEASE</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
       <version>3.1.2.RELEASE</version>
       <scope>compile</scope>
     </dependency>
@@ -93,5 +112,29 @@
       <url>http://repo.springsource.org/release</url>
     </repository>
   </repositories>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.5</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>cim</report>
+              <report>dependencies</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+  <distributionManagement>
+    <site>
+      <id>lakka</id>
+      <name>http://killnine.kapsi.fi/levyhylly</name>
+      <url>scp://lakka.kapsi.fi/home/users/killnine/sites/killnine.kapsi.fi/www/levyhylly/</url>
+    </site>
+  </distributionManagement>
 </project>
 

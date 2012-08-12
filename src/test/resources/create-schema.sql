@@ -1,0 +1,16 @@
+CREATE TABLE artist (
+	id NUMERIC GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(128),
+	PRIMARY KEY (id)
+);
+
+CREATE INDEX artist_name_idx ON artist (name);
+
+CREATE TABLE album (
+	id NUMERIC GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(128),
+	year SMALLINT,
+	artist_id NUMERIC,
+	PRIMARY KEY (id),
+	FOREIGN KEY  (artist_id) REFERENCES artist (id)
+);

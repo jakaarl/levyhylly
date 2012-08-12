@@ -14,7 +14,7 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>fi.helsinki.cs.jakaarel.levyhylly.ApplicationConfiguration</param-value>
+      <param-value>fi.helsinki.cs.jakaarel.levyhylly.WebAppConfiguration</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
