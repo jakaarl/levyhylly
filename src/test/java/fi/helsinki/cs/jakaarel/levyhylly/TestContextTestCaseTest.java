@@ -20,4 +20,9 @@ public class TestContextTestCaseTest extends TestContextTestCase {
 	assertTrue(context.containsBeanDefinition(TestDatabaseConfiguration.DATASOURCE_BEAN_NAME));
     }
 
+    @Override
+    protected Class<?>[] getConfigurations() {
+	return new Class[] { TestDatabaseConfiguration.class };
+    }
+
 }

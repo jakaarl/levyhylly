@@ -16,8 +16,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 @Profile("test")
 public class TestDatabaseConfiguration {
     
+    public static final String DATASOURCE_BEAN_NAME = "dataSource";
     private static final String CREATE_SCHEMA_SCRIPT = "create-schema.sql";
-    static final String DATASOURCE_BEAN_NAME = "dataSource";
     
     @Bean
     public DataSource dataSource() {
