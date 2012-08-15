@@ -1,7 +1,11 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data.jdbc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
@@ -12,14 +16,40 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
  */
 public class ArtistDao extends JdbcDaoSupport {
     
-    public Artist loadArtist(Integer id) {
-	Artist artist = null;
-	return artist;
+    private static final String ID_COLUMN = "id";
+    private static final String NAME_COLUMN = "name";
+    private static final String LOAD_QUERY =
+	    "SELECT id, name FROM artist WHERE id = ?";
+    private static final String FIND_BY_NAME_QUERY =
+	    "SELECT id, name FROM artist WHERE name "+
+	    "= ? ORDER BY name"; // TODO: limit, like
+    
+    public Artist loadArtist(Long id) throws DataAccessException {
+	return getJdbcTemplate().queryForObject(
+		LOAD_QUERY, ArtistRowMapper.INSTANCE, new Object[] { id });
     }
     
-    public List<Artist> findArtistByName(String name) {
-	List<Artist> results = null;
-	return results;
+    public List<Artist> findArtistsByName(String name) throws DataAccessException {
+	return getJdbcTemplate().query(
+		FIND_BY_NAME_QUERY, ArtistRowMapper.INSTANCE, new Object[] { name });
+    }
+    
+    
+    private static class ArtistRowMapper implements RowMapper<Artist> {
+
+	private static final ArtistRowMapper INSTANCE = new ArtistRowMapper();
+	
+	private ArtistRowMapper() {
+	    // suppress public constructor
+	}
+	
+	@Override
+	public Artist mapRow(ResultSet rs, int rowNum) throws SQLException {
+	    Long id = rs.getLong(ID_COLUMN);
+	    String name = rs.getString(NAME_COLUMN);
+	    return new Artist(id, name);
+	}
+	
     }
 
 }

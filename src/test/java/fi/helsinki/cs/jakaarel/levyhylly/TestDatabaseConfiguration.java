@@ -9,8 +9,9 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 /**
+ * A configuration class for test database.
+ * 
  * @author Jani Kaarela
- *
  */
 @Configuration
 @Profile("test")
