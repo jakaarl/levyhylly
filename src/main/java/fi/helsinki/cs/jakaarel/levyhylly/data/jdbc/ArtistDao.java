@@ -23,6 +23,8 @@ public class ArtistDao extends JdbcDaoSupport {
     private static final String FIND_BY_NAME_QUERY =
 	    "SELECT id, name FROM artist WHERE name "+
 	    "= ? ORDER BY name"; // TODO: limit, like
+    private static final String FIND_BY_NAME_LIKE_QUERY =
+	    "SELECT id, name FROM artist WHERE name LIKE ? ORDER BY name";
     
     public Artist loadArtist(Long id) throws DataAccessException {
 	return getJdbcTemplate().queryForObject(
@@ -32,6 +34,12 @@ public class ArtistDao extends JdbcDaoSupport {
     public List<Artist> findArtistsByName(String name) throws DataAccessException {
 	return getJdbcTemplate().query(
 		FIND_BY_NAME_QUERY, ArtistRowMapper.INSTANCE, new Object[] { name });
+    }
+    
+    public List<Artist> findArtistsByNameLike(String name) throws DataAccessException {
+	String escapedName = name.replaceAll("(%|_)", "\\\\\\1");
+	return getJdbcTemplate().query(
+		FIND_BY_NAME_LIKE_QUERY, ArtistRowMapper.INSTANCE, new Object[] { escapedName });
     }
     
     

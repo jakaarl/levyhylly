@@ -70,6 +70,20 @@ public class ArtistDaoTest extends TestContextTestCase {
 	assertNotNull(artists);
 	assertEquals(1, artists.size());
     }
+    
+    @Test
+    public void testFindArtistByNameLikeNonExistent() {
+	List<Artist> artists = artistDao.findArtistsByNameLike("Janttu");
+	assertNotNull(artists);
+	assertTrue(artists.isEmpty());
+    }
+    
+    @Test
+    public void testFindArtistByNameLikeExistent() {
+	List<Artist> artists = artistDao.findArtistsByNameLike("aus");
+	assertNotNull(artists);
+	assertTrue(artists.isEmpty());
+    }
 
     @Override
     protected Class<?>[] getConfigurations() {
