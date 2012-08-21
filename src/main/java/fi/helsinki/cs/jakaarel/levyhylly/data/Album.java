@@ -9,13 +9,13 @@ public class Album {
 	private Long id;
 	private String name;
 	private Short year;
-	private Artist artist;
+	private Long artistId;
 	
-	public Album(Long id, String name, Short year, Artist artist) {
+	public Album(Long id, String name, Short year, Long artistId) {
 		this.id = id;
 		this.name = name;
 		this.year = year;
-		this.artist = artist;
+		this.artistId = artistId;
 	}
 	
 	public Long getId() {
@@ -30,8 +30,8 @@ public class Album {
 	    return year;
 	}
 	
-	public Artist getArtist() {
-	    return artist;
+	public Long getArtistId() {
+	    return artistId;
 	}
 	
 	void setName(String name) {
@@ -42,8 +42,8 @@ public class Album {
 	    this.year = year;
 	}
 	
-	void setArtist(Artist artist) {
-	    this.artist = artist;
+	void setArtistId(Long artistId) {
+	    this.artistId = artistId;
 	}
 
 }

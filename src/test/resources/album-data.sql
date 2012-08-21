@@ -1,0 +1,12 @@
+INSERT INTO artist (name) VALUES ('Tauski');
+COMMIT;
+INSERT INTO album (name, year, artist_id) VALUES ('Charlotta', 1989, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Lauluni sinulle', 1992, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('En voi unohtaa', 1993, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Sinä vain', 1995, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Suuria rakkaustarinoita', 1995, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Taivaassa tavanneet', 1997, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Kaikki sinusta muistuttaa', 2000, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Aikamatkaaja', 2001, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Oranssin auringon alla', 2008, 1);
+INSERT INTO album (name, year, artist_id) VALUES ('Reloaded', 2009, 1);
