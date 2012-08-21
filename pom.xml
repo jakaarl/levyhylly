@@ -43,19 +43,14 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.1</version>
-        <dependencies>
-          <dependency><!-- add support for ssh/scp -->
-            <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-ssh</artifactId>
-            <version>1.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
     </plugins>
+    <extensions>
+      <extension><!-- add support for ssh/scp -->
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>1.0</version>
+      </extension>
+    </extensions>
   </build>
   <dependencies>
     <!-- Compile dependencies -->
@@ -130,6 +125,11 @@
     </plugins>
   </reporting>
   <distributionManagement>
+    <repository>
+      <id>lakka</id>
+      <name>lakka.kapsi.fi</name>
+      <url>scp://lakka.kapsi.fi/home/users/killnine/sites/killnine.kapsi.fi/www/levyhylly/artifacts/</url>
+    </repository>
     <site>
       <id>lakka</id>
       <name>http://killnine.kapsi.fi/levyhylly</name>

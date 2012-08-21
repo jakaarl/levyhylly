@@ -22,7 +22,7 @@ public class Artist {
 		return name;
 	}
 	
-	public void rename(String name) {
+	void setName(String name) {
 		this.name = name;
 	}
 

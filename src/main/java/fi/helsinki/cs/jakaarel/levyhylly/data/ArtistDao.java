@@ -1,4 +1,4 @@
-package fi.helsinki.cs.jakaarel.levyhylly.data.jdbc;
+package fi.helsinki.cs.jakaarel.levyhylly.data;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
 
 /**
  * @author Jani Kaarela
@@ -24,7 +23,7 @@ public class ArtistDao extends JdbcDaoSupport {
 	    "SELECT id, name FROM artist WHERE name "+
 	    "= ? ORDER BY name"; // TODO: limit, like
     private static final String FIND_BY_NAME_LIKE_QUERY =
-	    "SELECT id, name FROM artist WHERE name LIKE ? ORDER BY name";
+	    "SELECT id, name FROM artist WHERE LOWER(name) LIKE ? ORDER BY name";
     
     public Artist loadArtist(Long id) throws DataAccessException {
 	return getJdbcTemplate().queryForObject(
@@ -37,9 +36,9 @@ public class ArtistDao extends JdbcDaoSupport {
     }
     
     public List<Artist> findArtistsByNameLike(String name) throws DataAccessException {
-	String escapedName = name.replaceAll("(%|_)", "\\\\\\1");
+	String lowerName = name.toLowerCase();
 	return getJdbcTemplate().query(
-		FIND_BY_NAME_LIKE_QUERY, ArtistRowMapper.INSTANCE, new Object[] { escapedName });
+		FIND_BY_NAME_LIKE_QUERY, ArtistRowMapper.INSTANCE, new Object[] { lowerName });
     }
     
     

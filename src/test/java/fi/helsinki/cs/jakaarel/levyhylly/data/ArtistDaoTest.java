@@ -1,4 +1,4 @@
-package fi.helsinki.cs.jakaarel.levyhylly.data.jdbc;
+package fi.helsinki.cs.jakaarel.levyhylly.data;
 
 import static fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration.DATASOURCE_BEAN_NAME;
 import static org.junit.Assert.assertEquals;
@@ -19,6 +19,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import fi.helsinki.cs.jakaarel.levyhylly.TestContextTestCase;
 import fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration;
 import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
+import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
 
 /**
  * 

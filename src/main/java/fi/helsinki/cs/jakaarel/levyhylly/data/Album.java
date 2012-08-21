@@ -17,5 +17,33 @@ public class Album {
 		this.year = year;
 		this.artist = artist;
 	}
+	
+	public Long getId() {
+	    return id;
+	}
+	
+	public String getName() {
+	    return name;
+	}
+	
+	public Short getYear() {
+	    return year;
+	}
+	
+	public Artist getArtist() {
+	    return artist;
+	}
+	
+	void setName(String name) {
+	    this.name = name;
+	}
+	
+	void setYear(Short year) {
+	    this.year = year;
+	}
+	
+	void setArtist(Artist artist) {
+	    this.artist = artist;
+	}
 
 }
