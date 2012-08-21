@@ -33,6 +33,9 @@ public class ArtistDaoTest extends TestContextTestCase {
     private static final String NON_EXISTENT_ARTIST_NAME = "Janttu ja Himmeet Tähdet";
     private static final Long EXISTENT_ARTIST_ID = Long.valueOf(1);
     private static final String EXISTENT_ARTIST_NAME = "Tauski";
+    private static final String NON_EXISTENT_ARTIST_LIKE_QUERY = "Janttu";
+    private static final String EXISTENT_ARTIST_LIKE_QUERY = "aus";
+    private static final String EXISTENT_ARTIST_LIKE_QUERY_WRONG_CASE = "SKI";
     
     private ArtistDao artistDao;
     
@@ -74,16 +77,23 @@ public class ArtistDaoTest extends TestContextTestCase {
     
     @Test
     public void testFindArtistByNameLikeNonExistent() {
-	List<Artist> artists = artistDao.findArtistsByNameLike("Janttu");
+	List<Artist> artists = artistDao.findArtistsByNameLike(NON_EXISTENT_ARTIST_LIKE_QUERY);
 	assertNotNull(artists);
 	assertTrue(artists.isEmpty());
     }
     
     @Test
     public void testFindArtistByNameLikeExistent() {
-	List<Artist> artists = artistDao.findArtistsByNameLike("aus");
+	List<Artist> artists = artistDao.findArtistsByNameLike(EXISTENT_ARTIST_LIKE_QUERY);
 	assertNotNull(artists);
-	assertTrue(artists.isEmpty());
+	assertEquals(1, artists.size());
+    }
+    
+    @Test
+    public void testFindArtistByNameLikeExistentWrongCase() {
+	List<Artist> artists = artistDao.findArtistsByNameLike(EXISTENT_ARTIST_LIKE_QUERY_WRONG_CASE);
+	assertNotNull(artists);
+	assertEquals(1, artists.size());
     }
 
     @Override
