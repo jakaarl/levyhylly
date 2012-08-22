@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper;
+
 
 /**
  * @author Jani Kaarela
@@ -36,12 +38,9 @@ public class ArtistDao extends JdbcDaoSupport {
     }
     
     public List<Artist> findArtistsByNameLike(String name) throws DataAccessException {
+    	String likeifiedName = "%" + StringHelper.escapeLikeWildcards(name).toLowerCase() + "%";
 	return getJdbcTemplate().query(
-		FIND_BY_NAME_LIKE_QUERY, ArtistRowMapper.INSTANCE, new Object[] { sanitizeAndLikeify(name) });
-    }
-    
-    private String sanitizeAndLikeify(String name) {
-	return "%" + name.replaceAll("(%|_)", "\\\\\\1").toLowerCase() + "%";
+		FIND_BY_NAME_LIKE_QUERY, ArtistRowMapper.INSTANCE, new Object[] { likeifiedName });
     }
     
     

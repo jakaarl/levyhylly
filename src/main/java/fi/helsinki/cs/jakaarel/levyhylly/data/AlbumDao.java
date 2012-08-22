@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper;
+
 /**
  * 
  * @author Jani Kaarela
@@ -23,7 +25,9 @@ public class AlbumDao extends JdbcDaoSupport {
     private static final String LOAD_QUERY =
 	    "SELECT id, name, year, artist_id FROM album WHERE id = ?";
     private static final String FIND_BY_ARTIST_ID_QUERY =
-	    "SELECT id, name, year, artist_id FROM album WHERE artist_id = ?";
+	    "SELECT id, name, year, artist_id FROM album WHERE artist_id = ? ORDER BY year";
+    private static final String FIND_BY_ALBUM_NAME_QUERY =
+    		"SELECT id, name, year, artist_id FROM album WHERE LOWER(name) LIKE ? ORDER BY name, year";
     
     public Album loadAlbum(Long id) throws DataAccessException {
 	return getJdbcTemplate().queryForObject(
@@ -33,6 +37,12 @@ public class AlbumDao extends JdbcDaoSupport {
     public List<Album> findAlbumByArtistId(Long artistId) throws DataAccessException {
 	return getJdbcTemplate().query(
 		FIND_BY_ARTIST_ID_QUERY, AlbumRowMapper.INSTANCE, new Object[] { artistId });
+    }
+    
+    public List<Album> findAlbumByNameLike(String name) throws DataAccessException {
+    	String likeifiedName = "%" + StringHelper.escapeLikeWildcards(name).toLowerCase() + "%";
+    	return getJdbcTemplate().query(
+    		FIND_BY_ALBUM_NAME_QUERY, AlbumRowMapper.INSTANCE, new Object[] { likeifiedName });
     }
     
     
