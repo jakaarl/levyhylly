@@ -24,7 +24,7 @@ import fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration;
  * @author Jani Kaarela
  *
  */
-public class AlbumDaoTest extends TestContextTestCase {
+public class AlbumDaoTest extends DatabaseTestCase {
     
     private static final String ALBUM_DATA_SCRIPT = "album-data.sql";
     private static final Long NON_EXISTENT_ALBUM_ID = Long.MAX_VALUE;
@@ -70,11 +70,6 @@ public class AlbumDaoTest extends TestContextTestCase {
     	List<Album> albums = albumDao.findAlbumByArtistId(EXISTENT_ARTIST_ID);
     	assertNotNull(albums);
     	assertEquals(EXISTENT_ARTIST_ALBUM_COUNT, albums.size());
-    }
-    
-    @Override
-    protected Class<?>[] getConfigurations() {
-	return new Class[] { TestDatabaseConfiguration.class };
     }
 
 }

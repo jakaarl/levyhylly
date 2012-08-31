@@ -26,7 +26,7 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;;
  * @author Jani Kaarela
  *
  */
-public class ArtistDaoTest extends TestContextTestCase {
+public class ArtistDaoTest extends DatabaseTestCase {
     
     private static final String SQL_DATA_SCRIPT = "artist-data.sql";
     private static final Long NON_EXISTENT_ARTIST_ID = Long.MAX_VALUE;
@@ -94,11 +94,6 @@ public class ArtistDaoTest extends TestContextTestCase {
 	List<Artist> artists = artistDao.findArtistsByNameLike(EXISTENT_ARTIST_LIKE_QUERY_WRONG_CASE);
 	assertNotNull(artists);
 	assertEquals(1, artists.size());
-    }
-
-    @Override
-    protected Class<?>[] getConfigurations() {
-	return new Class[] { TestDatabaseConfiguration.class };
     }
 
 }
