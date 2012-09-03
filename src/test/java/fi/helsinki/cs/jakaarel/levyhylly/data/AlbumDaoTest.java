@@ -16,9 +16,6 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import fi.helsinki.cs.jakaarel.levyhylly.TestContextTestCase;
-import fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration;
-
 /**
  * 
  * @author Jani Kaarela
