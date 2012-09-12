@@ -3,4 +3,7 @@
 <properties version="1.0">
   <entry key="home.title">Welcome to Levyhylly</entry>
   <entry key="home.introduction">Levyhylly is a (poor) record collection application with a butt-ugly user interface. Have fun!</entry>
+  <entry key="search.label">Search: </entry>
+  <entry key="search.byArtist">By artist</entry>
+  <entry key="search.byAlbum">By album</entry>
 </properties>
