@@ -5,7 +5,7 @@
     <title>Levyhylly</title>
   </head>
   <body>
-    <h1><fmt:message key="home.title"/></h1>
+    <jsp:include page="../includes/header.jspf"/>
     <p><fmt:message key="home.introduction"/></p>
     <p>
       <form id="search" action="search" method="POST">

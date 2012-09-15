@@ -6,9 +6,10 @@
   </head>
   <body>
     <jsp:include page="../includes/header.jspf"/>
+    <p>${album.name}</p>
     <p>
-    <c:forEach var="artist" items="${resultArtists}">
-      <a href="artistAlbums?artistId=${artist.id}" class="artist">${artist.name}</a>
+    <c:forEach var="track" items="${tracks}">
+      <span class="track">${track.number} ${track.name}</span>
     </c:forEach>
     </p>
   </body>

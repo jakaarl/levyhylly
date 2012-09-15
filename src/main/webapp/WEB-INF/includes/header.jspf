@@ -1,0 +1,2 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<a href="/" class="header"><h1><fmt:message key="app.title"/></h1></a>
