@@ -39,8 +39,7 @@ public class AlbumDaoTest extends DatabaseTestCase {
 	ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 	populator.addScript(new ClassPathResource(ALBUM_DATA_SCRIPT));
 	DatabasePopulatorUtils.execute(populator, dataSource);
-	albumDao = new AlbumDao();
-	albumDao.setDataSource(dataSource);
+	albumDao = new AlbumDao(dataSource);
     }
     
     @Test(expected = IncorrectResultSizeDataAccessException.class)

@@ -37,8 +37,7 @@ public class TrackDaoTest extends DatabaseTestCase {
     	ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
     	populator.addScript(new ClassPathResource(TRACK_DATA_SCRIPT));
     	DatabasePopulatorUtils.execute(populator, dataSource);
-    	trackDao = new TrackDao();
-    	trackDao.setDataSource(dataSource);
+    	trackDao = new TrackDao(dataSource);
     }
     
     @Test(expected = IncorrectResultSizeDataAccessException.class)

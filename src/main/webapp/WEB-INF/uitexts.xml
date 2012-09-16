@@ -6,9 +6,11 @@
   <entry key="search.label">Search: </entry>
   <entry key="search.byArtist">By artist</entry>
   <entry key="search.byAlbum">By album</entry>
+  <entry key="search.noResults">Sorry, nothing found.</entry>
   <entry key="create.album">Create album</entry>
   <entry key="save.album">Save album</entry>
   <entry key="album.artistLabel">Artist</entry>
   <entry key="album.nameLabel">Name</entry>
   <entry key="album.yearLabel">Year</entry>
+  <entry key="album.tracksLabel">Tracks</entry>
 </properties>

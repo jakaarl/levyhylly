@@ -45,8 +45,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 	populator.addScript(new ClassPathResource(SQL_DATA_SCRIPT));
 	DatabasePopulatorUtils.execute(populator, dataSource);
-	artistDao = new ArtistDao();
-	artistDao.setDataSource(dataSource);
+	artistDao = new ArtistDao(dataSource);
     }
     
     @Test(expected = IncorrectResultSizeDataAccessException.class)

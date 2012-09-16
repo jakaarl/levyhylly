@@ -8,10 +8,11 @@
   <body>
     <jsp:include page="../includes/header.jsp"/>
     <p>
+    <c:if test="${empty resultAlbums}"><ftm:message key="search.noResults"/></c:if>
     <c:forEach var="album" items="${resultAlbums}">
       <a href="albumDetails?albumId=${album.id}" class="album">${album.name} ${album.year}</a>
     </c:forEach>
-    <c:if test="not null ${artistId}">
+    <c:if test="${not empty artistId}">
       <a href="createAlbum?artistId="${artistId}" class="create"><fmt:message key="create.album"/></a>
     </c:if>
     </p>

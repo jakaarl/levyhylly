@@ -1,8 +1,8 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
-import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
+import fi.helsinki.cs.jakaarel.levyhylly.data.AlbumDao;
 import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
+import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
 
 /**
  * 
@@ -26,9 +28,9 @@ public class SearchController {
     static final String ALBUM_RESULTS_VIEW = "albumResults";
     private static final String BY_ARTIST_BUTTON = "byArtist";
     private static final String BY_ALBUM_BUTTON = "byAlbum";
-    private static final Artist SAMPLE_ARTIST = new Artist(Long.valueOf(1L), "Example Artist");
-    private static final Album SAMPLE_ALBUM =
-	    new Album(Long.valueOf(1), "Example Album", Integer.valueOf(2012).shortValue(), Long.valueOf(1L));
+    
+    private @Autowired AlbumDao albumDao;
+    private @Autowired ArtistDao artistDao;
     
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public ModelAndView handleSearch(@RequestParam String searchTerm, @RequestParam String submitButton) {
@@ -43,23 +45,29 @@ public class SearchController {
     
     ModelAndView handleSearchArtists(String artist) {
 	ModelAndView mav = new ModelAndView(ARTIST_RESULTS_VIEW);
-	List<Artist> results = Collections.singletonList(SAMPLE_ARTIST);
-	mav.addObject(ARTIST_RESULTS_KEY, results);
+	List<Artist> results = artistDao.findArtistsByNameLike(artist);
+	if (!results.isEmpty()) {
+	    mav.addObject(ARTIST_RESULTS_KEY, results);
+	}
 	return mav;
     }
     
     ModelAndView handleSearchAlbums(String album) {
 	ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
-	List<Album> results = Collections.singletonList(SAMPLE_ALBUM);
-	mav.addObject(ALBUM_RESULTS_KEY, results);
+	List<Album> results = albumDao.findAlbumByNameLike(album);
+	if (!results.isEmpty()) {
+	    mav.addObject(ALBUM_RESULTS_KEY, results);
+	}
 	return mav;
     }
     
     @RequestMapping(value = "/artistAlbums", method = RequestMethod.GET)
     public ModelAndView handleArtistAlbums(@RequestParam Long artistId) {
 	ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
-	List<Album> results = Collections.singletonList(SAMPLE_ALBUM);
-	mav.addObject(ALBUM_RESULTS_KEY, results);
+	List<Album> results = albumDao.findAlbumByArtistId(artistId);
+	if (!results.isEmpty()) {
+	    mav.addObject(ALBUM_RESULTS_KEY, results);
+	}
 	return mav;
     }
 
