@@ -18,7 +18,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @Import({DatabaseConfiguration.class, BeanConfiguration.class})
-@ComponentScan(basePackages = "fi.helsinki.cs.jakaarel.levyhylly")
+@ComponentScan(basePackages =
+	{"fi.helsinki.cs.jakaarel.levyhylly.controllers", "fi.helsinki.cs.jakaarel.levyhylly.data"}
+)
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Bean 

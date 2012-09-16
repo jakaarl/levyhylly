@@ -5,8 +5,8 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+import fi.helsinki.cs.jakaarel.levyhylly.util.DefaultInMemoryDatabase;
 
 /**
  * A configuration class for test database.
@@ -18,14 +18,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class TestDatabaseConfiguration {
     
     public static final String DATASOURCE_BEAN_NAME = "dataSource";
-    private static final String CREATE_SCHEMA_SCRIPT = "create-schema.sql";
+    private DefaultInMemoryDatabase db = new DefaultInMemoryDatabase();
     
     @Bean
     public DataSource dataSource() {
-	EmbeddedDatabaseBuilder dbBuilder = new EmbeddedDatabaseBuilder();
-	dbBuilder.setType(EmbeddedDatabaseType.HSQL);
-	dbBuilder.addScript(CREATE_SCHEMA_SCRIPT);
-	return dbBuilder.build();
+	return db.getDataSource();
     }
 
 }

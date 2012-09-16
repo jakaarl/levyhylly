@@ -20,18 +20,18 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-      <plugin>
+      <!--<plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.2.1</version>
         <configuration>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
-          <!--<archive>
+          <archive>
             <manifest>
               <mainClass>com.saunalahti.util.dbworker.impl.Launcher</mainClass>
             </manifest>
-          </archive>-->
+          </archive>
         </configuration>
         <executions>
           <execution>
@@ -42,7 +42,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
     </plugins>
     <extensions>
       <extension><!-- add support for ssh/scp -->
@@ -80,12 +80,6 @@
       <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <version>2.2.4</version>
-      <scope>test</scope>
-    </dependency>
     <!-- Runtime dependencies -->
     <dependency><!-- Required for @Configuration -->
       <groupId>cglib</groupId>
@@ -103,6 +97,12 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.0.2</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency><!--  Required at runtime, if no data source bound to JNDI -->
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.2.4</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
