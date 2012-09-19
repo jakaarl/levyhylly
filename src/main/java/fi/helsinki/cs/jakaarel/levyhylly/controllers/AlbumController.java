@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
@@ -57,5 +58,22 @@ public class AlbumController {
 	    mav.addObject(ALBUM_ARTIST_NAME_KEY, artist.getName());
 	}
 	return mav;
+    }
+    
+    @RequestMapping(value = "/editAlbum", method = RequestMethod.GET)
+    public ModelAndView handleEditAlbum(@RequestParam Long albumId) {
+	Album album = albumDao.loadAlbum(albumId);
+	List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
+	Long artistId = album.getArtistId();
+	ModelAndView mav = handleCreateAlbum(artistId);
+	mav.addObject(ALBUM_KEY, album);
+	mav.addObject(TRACKS_KEY, tracks);
+	return mav;
+    }
+    
+    @RequestMapping(value = "/addTrack", method = RequestMethod.POST)
+    public @ResponseBody List<Track> handleAddTrack(@RequestParam Long albumId, @RequestParam String name) {
+	List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
+	return tracks;
     }
 }
