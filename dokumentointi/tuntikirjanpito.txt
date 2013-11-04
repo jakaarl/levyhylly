@@ -1,0 +1,8 @@
+- tunteja viime vuonna: 15-25?
+-- tietomalli, yksikkötestejä, kontrollerien aihiot
+- ma 4.11.2013 n. 1,5h
+-- SVN:n repon konvertointi Gitiin
+-- Github-repon luominen
+-- sorsien tuominen Githubiin
+-- kurssidokkarien selailu ja Labtooliin ilmoittautuminen
+
