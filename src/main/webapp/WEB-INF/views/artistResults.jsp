@@ -1,14 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
   <head>
-    <title>Levyhylly</title>
+    <title><fmt:message key="app.title"/></title>
   </head>
   <body>
     <jsp:include page="../includes/header.jsp"/>
     <p>
-    <c:if test="${empty resultArtists}"><ftm:message key="search.noResults"/></c:if>
+    <c:if test="${empty resultArtists}"><fmt:message key="search.noResults"/></c:if>
     <c:forEach var="artist" items="${resultArtists}">
       <a href="artistAlbums?artistId=${artist.id}" class="artist">${artist.name}</a>
     </c:forEach>
