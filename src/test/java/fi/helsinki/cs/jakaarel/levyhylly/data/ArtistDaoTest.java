@@ -19,8 +19,6 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
 import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
 
-;
-
 /**
  * 
  * @author Jani Kaarela
