@@ -17,58 +17,61 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
 /**
  * 
  * @author Jani Kaarela
- *
+ * 
  */
 @Controller
 public class SearchController {
-    
-    public static final String ARTIST_RESULTS_KEY = "resultArtists";
-    public static final String ALBUM_RESULTS_KEY = "resultAlbums";
-    static final String ARTIST_RESULTS_VIEW = "artistResults";
-    static final String ALBUM_RESULTS_VIEW = "albumResults";
-    private static final String BY_ARTIST_BUTTON = "byArtist";
-    private static final String BY_ALBUM_BUTTON = "byAlbum";
-    
-    private @Autowired AlbumDao albumDao;
-    private @Autowired ArtistDao artistDao;
-    
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public ModelAndView handleSearch(@RequestParam String searchTerm, @RequestParam String submitButton) {
-	ModelAndView mav = null;
-	if (BY_ARTIST_BUTTON.equals(submitButton)) {
-	    mav = handleSearchArtists(searchTerm);
-	} else if (BY_ALBUM_BUTTON.equals(submitButton)) {
-	    mav = handleSearchAlbums(searchTerm);
+	
+	public static final String ARTIST_RESULTS_KEY = "resultArtists";
+	public static final String ALBUM_RESULTS_KEY = "resultAlbums";
+	static final String ARTIST_RESULTS_VIEW = "artistResults";
+	static final String ALBUM_RESULTS_VIEW = "albumResults";
+	private static final String BY_ARTIST_BUTTON = "byArtist";
+	private static final String BY_ALBUM_BUTTON = "byAlbum";
+	
+	private @Autowired
+	AlbumDao albumDao;
+	private @Autowired
+	ArtistDao artistDao;
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView handleSearch(@RequestParam String searchTerm,
+			@RequestParam String submitButton) {
+		ModelAndView mav = null;
+		if (BY_ARTIST_BUTTON.equals(submitButton)) {
+			mav = handleSearchArtists(searchTerm);
+		} else if (BY_ALBUM_BUTTON.equals(submitButton)) {
+			mav = handleSearchAlbums(searchTerm);
+		}
+		return mav;
 	}
-	return mav;
-    }
-    
-    ModelAndView handleSearchArtists(String artist) {
-	ModelAndView mav = new ModelAndView(ARTIST_RESULTS_VIEW);
-	List<Artist> results = artistDao.findArtistsByNameLike(artist);
-	if (!results.isEmpty()) {
-	    mav.addObject(ARTIST_RESULTS_KEY, results);
+	
+	ModelAndView handleSearchArtists(String artist) {
+		ModelAndView mav = new ModelAndView(ARTIST_RESULTS_VIEW);
+		List<Artist> results = artistDao.findArtistsByNameLike(artist);
+		if (!results.isEmpty()) {
+			mav.addObject(ARTIST_RESULTS_KEY, results);
+		}
+		return mav;
 	}
-	return mav;
-    }
-    
-    ModelAndView handleSearchAlbums(String album) {
-	ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
-	List<Album> results = albumDao.findAlbumByNameLike(album);
-	if (!results.isEmpty()) {
-	    mav.addObject(ALBUM_RESULTS_KEY, results);
+	
+	ModelAndView handleSearchAlbums(String album) {
+		ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
+		List<Album> results = albumDao.findAlbumByNameLike(album);
+		if (!results.isEmpty()) {
+			mav.addObject(ALBUM_RESULTS_KEY, results);
+		}
+		return mav;
 	}
-	return mav;
-    }
-    
-    @RequestMapping(value = "/artistAlbums", method = RequestMethod.GET)
-    public ModelAndView handleArtistAlbums(@RequestParam Long artistId) {
-	ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
-	List<Album> results = albumDao.findAlbumByArtistId(artistId);
-	if (!results.isEmpty()) {
-	    mav.addObject(ALBUM_RESULTS_KEY, results);
+	
+	@RequestMapping(value = "/artistAlbums", method = RequestMethod.GET)
+	public ModelAndView handleArtistAlbums(@RequestParam Long artistId) {
+		ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
+		List<Album> results = albumDao.findAlbumByArtistId(artistId);
+		if (!results.isEmpty()) {
+			mav.addObject(ALBUM_RESULTS_KEY, results);
+		}
+		return mav;
 	}
-	return mav;
-    }
-
+	
 }

@@ -2,7 +2,7 @@ package fi.helsinki.cs.jakaarel.levyhylly.data;
 
 /**
  * @author Jani Kaarela
- *
+ * 
  */
 public class Album {
 	
@@ -19,31 +19,31 @@ public class Album {
 	}
 	
 	public Long getId() {
-	    return id;
+		return id;
 	}
 	
 	public String getName() {
-	    return name;
+		return name;
 	}
 	
 	public Short getYear() {
-	    return year;
+		return year;
 	}
 	
 	public Long getArtistId() {
-	    return artistId;
+		return artistId;
 	}
 	
 	void setName(String name) {
-	    this.name = name;
+		this.name = name;
 	}
 	
 	void setYear(Short year) {
-	    this.year = year;
+		this.year = year;
 	}
 	
 	void setArtistId(Long artistId) {
-	    this.artistId = artistId;
+		this.artistId = artistId;
 	}
-
+	
 }

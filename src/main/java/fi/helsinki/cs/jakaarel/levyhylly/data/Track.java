@@ -19,7 +19,7 @@ public class Track {
 		this.length = length;
 		this.albumId = albumId;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -27,15 +27,15 @@ public class Track {
 	public Short getNumber() {
 		return number;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public Short getLength() {
 		return length;
 	}
-
+	
 	public Long getAlbumId() {
 		return albumId;
 	}

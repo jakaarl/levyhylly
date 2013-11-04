@@ -17,13 +17,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @EnableWebMvc
 @Configuration
-@Import({DatabaseConfiguration.class, BeanConfiguration.class})
-@ComponentScan(basePackages =
-	{"fi.helsinki.cs.jakaarel.levyhylly.controllers", "fi.helsinki.cs.jakaarel.levyhylly.data"}
-)
+@Import({ DatabaseConfiguration.class, BeanConfiguration.class })
+@ComponentScan(basePackages = {
+		"fi.helsinki.cs.jakaarel.levyhylly.controllers",
+		"fi.helsinki.cs.jakaarel.levyhylly.data" })
 public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	
-	@Bean 
+	@Bean
 	public InternalResourceViewResolver configureInternalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
@@ -32,13 +32,14 @@ public class WebAppConfiguration extends WebMvcConfigurerAdapter {
 	}
 	
 	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable(); 
+	public void configureDefaultServletHandling(
+			DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
 	}
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("home");
 	}
-
+	
 }

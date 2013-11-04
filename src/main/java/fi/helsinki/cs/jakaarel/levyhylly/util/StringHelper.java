@@ -9,12 +9,13 @@ public class StringHelper {
 	/**
 	 * Escapes SQL LIKE wildcards.
 	 * 
-	 * @param param	parameter to escape.
+	 * @param param
+	 *            parameter to escape.
 	 * 
-	 * @return	parameter with wildcards escaped.
+	 * @return parameter with wildcards escaped.
 	 */
 	public static String escapeLikeWildcards(String param) {
 		return param.replace("%", "\\%").replace("_", "\\_");
 	}
-
+	
 }

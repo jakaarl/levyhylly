@@ -2,7 +2,7 @@ package fi.helsinki.cs.jakaarel.levyhylly.data;
 
 /**
  * @author Jani Kaarela
- *
+ * 
  */
 public class Artist {
 	
@@ -25,5 +25,5 @@ public class Artist {
 	void setName(String name) {
 		this.name = name;
 	}
-
+	
 }

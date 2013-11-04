@@ -8,11 +8,11 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 /**
  * 
  * @author Jani Kaarela
- *
+ * 
  */
 @Configuration
 public class BeanConfiguration {
-
+	
 	private static final String[] BUNDLE_BASENAMES = new String[] { "WEB-INF/uitexts" };
 	
 	@Bean
