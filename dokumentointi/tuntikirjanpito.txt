@@ -6,7 +6,8 @@
 -- sorsien tuominen Githubiin
 -- sorsien siistimistä ja formatointia
 -- kurssidokkarien selailu ja Labtooliin ilmoittautuminen
-- ti 5.11.2013 n. 1h
+- ti 5.11.2013 n. 1,5h
 -- testimetodien uudellennimeäminen
 -- kantatestien setUp() yhteiseen yläluokkaan
 -- sorsien formatointia (ilmeisesti sössin aiemmin)
+-- luokkakaavion luonnos
