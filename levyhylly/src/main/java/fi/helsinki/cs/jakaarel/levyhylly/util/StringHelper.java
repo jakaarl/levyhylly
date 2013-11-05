@@ -5,7 +5,7 @@ package fi.helsinki.cs.jakaarel.levyhylly.util;
  * @author jakaarl
  */
 public class StringHelper {
-	
+
 	/**
 	 * Escapes SQL LIKE wildcards.
 	 * 
@@ -17,5 +17,5 @@ public class StringHelper {
 	public static String escapeLikeWildcards(String param) {
 		return param.replace("%", "\\%").replace("_", "\\_");
 	}
-	
+
 }

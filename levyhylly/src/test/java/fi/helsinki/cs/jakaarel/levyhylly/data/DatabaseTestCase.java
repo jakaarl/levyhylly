@@ -16,22 +16,21 @@ import fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration;
  * @author jakaarl
  */
 public abstract class DatabaseTestCase extends TestContextTestCase {
-    
-    protected DataSource dataSource;
-    
-    public void setUp() {
-	dataSource = context.getBean(DATASOURCE_BEAN_NAME,
-			DataSource.class);
-	ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-	populator.addScript(new ClassPathResource(getDataScriptPath()));
-	DatabasePopulatorUtils.execute(populator, dataSource);
-    }
-    
-    abstract protected String getDataScriptPath();
 
-    @Override
-    protected Class<?>[] getConfigurations() {
-	return new Class[] { TestDatabaseConfiguration.class };
-    }
+	protected DataSource dataSource;
+
+	public void setUp() {
+		dataSource = context.getBean(DATASOURCE_BEAN_NAME, DataSource.class);
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.addScript(new ClassPathResource(getDataScriptPath()));
+		DatabasePopulatorUtils.execute(populator, dataSource);
+	}
+
+	abstract protected String getDataScriptPath();
+
+	@Override
+	protected Class<?>[] getConfigurations() {
+		return new Class[] { TestDatabaseConfiguration.class };
+	}
 
 }

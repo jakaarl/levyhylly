@@ -12,14 +12,14 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
  */
 @Configuration
 public class BeanConfiguration {
-	
+
 	private static final String[] BUNDLE_BASENAMES = new String[] { "WEB-INF/uitexts" };
-	
+
 	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasenames(BUNDLE_BASENAMES);
 		return messageSource;
 	}
-	
+
 }

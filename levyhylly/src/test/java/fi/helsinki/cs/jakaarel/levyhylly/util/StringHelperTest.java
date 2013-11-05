@@ -9,14 +9,14 @@ import org.junit.Test;
  * @author jakaarl
  */
 public class StringHelperTest {
-	
+
 	@Test
 	public void escapeLikeWildcardsShouldReturnAsIs() {
 		String original = "this-does*notIncludeWild/cards";
 		String escaped = StringHelper.escapeLikeWildcards(original);
 		assertEquals(original, escaped);
 	}
-	
+
 	@Test
 	public void escapeLikeWildcardsShouldEscapePercentageSign() {
 		String original = "the%shouldBeEscaped";
@@ -24,7 +24,7 @@ public class StringHelperTest {
 		String escaped = StringHelper.escapeLikeWildcards(original);
 		assertEquals(expected, escaped);
 	}
-	
+
 	@Test
 	public void escapeLikeWildcardsShouldEscapeUnderscore() {
 		String original = "under_score_ShouldBeEscaped";
@@ -32,7 +32,7 @@ public class StringHelperTest {
 		String escaped = StringHelper.escapeLikeWildcards(original);
 		assertEquals(expected, escaped);
 	}
-	
+
 	@Test
 	public void escapeLikeWildcardsShouldEscapeBoth() {
 		String original = "both%and_ShouldBeEscaped";
@@ -40,5 +40,5 @@ public class StringHelperTest {
 		String escaped = StringHelper.escapeLikeWildcards(original);
 		assertEquals(expected, escaped);
 	}
-	
+
 }

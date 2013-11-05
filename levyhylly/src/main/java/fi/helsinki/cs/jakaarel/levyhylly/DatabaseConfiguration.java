@@ -20,36 +20,30 @@ import fi.helsinki.cs.jakaarel.levyhylly.util.DefaultInMemoryDatabase;
  */
 @Configuration
 public class DatabaseConfiguration {
-	
-	private static final Logger LOGGER = Logger
-			.getLogger(DatabaseConfiguration.class.getName());
-	private static final String DATA_SOURCE_JNDI_NAME = JndiLocatorSupport.CONTAINER_PREFIX
-			+ "levyhyllyDataSource";
-	
+
+	private static final Logger LOGGER = Logger.getLogger(DatabaseConfiguration.class.getName());
+	private static final String DATA_SOURCE_JNDI_NAME = JndiLocatorSupport.CONTAINER_PREFIX + "levyhyllyDataSource";
+
 	private DataSource dataSource;
-	
+
 	public DatabaseConfiguration() {
 		JndiTemplate jndiTemplate = new JndiTemplate();
 		try {
-			dataSource = jndiTemplate.lookup(DATA_SOURCE_JNDI_NAME,
-					DataSource.class);
+			dataSource = jndiTemplate.lookup(DATA_SOURCE_JNDI_NAME, DataSource.class);
 			if (LOGGER.isLoggable(Level.INFO)) {
-				LOGGER.info("Successfully looked up data source "
-						+ DATA_SOURCE_JNDI_NAME);
+				LOGGER.info("Successfully looked up data source " + DATA_SOURCE_JNDI_NAME);
 			}
 		} catch (NamingException ne) {
-			LOGGER.log(Level.WARNING,
-					"JNDI data source lookup failed, reverting to in-memory database"
-							+ "- are you sure you bound a data source to "
-							+ DATA_SOURCE_JNDI_NAME + "?", ne);
+			LOGGER.log(Level.WARNING, "JNDI data source lookup failed, reverting to in-memory database"
+					+ "- are you sure you bound a data source to " + DATA_SOURCE_JNDI_NAME + "?", ne);
 			DefaultInMemoryDatabase inMemoryDatabase = new DefaultInMemoryDatabase();
 			dataSource = inMemoryDatabase.getDataSource();
 		}
 	}
-	
+
 	@Bean
 	public DataSource dataSource() {
 		return dataSource;
 	}
-	
+
 }

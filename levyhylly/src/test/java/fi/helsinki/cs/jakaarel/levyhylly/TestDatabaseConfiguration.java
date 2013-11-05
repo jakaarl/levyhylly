@@ -16,13 +16,13 @@ import fi.helsinki.cs.jakaarel.levyhylly.util.DefaultInMemoryDatabase;
 @Configuration
 @Profile("test")
 public class TestDatabaseConfiguration {
-	
+
 	public static final String DATASOURCE_BEAN_NAME = "dataSource";
 	private DefaultInMemoryDatabase db = new DefaultInMemoryDatabase();
-	
+
 	@Bean
 	public DataSource dataSource() {
 		return db.getDataSource();
 	}
-	
+
 }

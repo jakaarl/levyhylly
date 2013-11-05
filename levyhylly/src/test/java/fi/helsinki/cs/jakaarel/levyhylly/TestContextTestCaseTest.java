@@ -11,19 +11,18 @@ import org.junit.Test;
  * @author Jani Kaarela
  */
 public class TestContextTestCaseTest extends TestContextTestCase {
-	
+
 	/**
 	 * Test setting up application context and data source.
 	 */
 	@Test
 	public void testDataSource() {
-		assertTrue(context
-				.containsBeanDefinition(TestDatabaseConfiguration.DATASOURCE_BEAN_NAME));
+		assertTrue(context.containsBeanDefinition(TestDatabaseConfiguration.DATASOURCE_BEAN_NAME));
 	}
-	
+
 	@Override
 	protected Class<?>[] getConfigurations() {
 		return new Class[] { TestDatabaseConfiguration.class };
 	}
-	
+
 }

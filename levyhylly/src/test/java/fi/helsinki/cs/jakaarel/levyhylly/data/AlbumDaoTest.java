@@ -16,7 +16,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
  * 
  */
 public class AlbumDaoTest extends DatabaseTestCase {
-	
+
 	private static final String ALBUM_DATA_SCRIPT = "album-data.sql";
 	private static final Long NON_EXISTENT_ALBUM_ID = Long.MAX_VALUE;
 	private static final Long EXISTENT_ALBUM_ID = Long.valueOf(1);
@@ -24,35 +24,34 @@ public class AlbumDaoTest extends DatabaseTestCase {
 	private static final Long NON_EXISTENT_ARTIST_ID = Long.MAX_VALUE;
 	private static final Long EXISTENT_ARTIST_ID = Long.valueOf(1);
 	private static final int EXISTENT_ARTIST_ALBUM_COUNT = 10;
-	
+
 	private AlbumDao albumDao;
-	
+
 	@Before
 	public void setUp() {
 		super.setUp();
 		albumDao = new AlbumDao(dataSource);
 	}
-	
+
 	@Test(expected = IncorrectResultSizeDataAccessException.class)
 	public void loadAlbumShouldFailForNonExistent() {
 		albumDao.loadAlbum(NON_EXISTENT_ALBUM_ID);
 	}
-	
+
 	@Test
 	public void shouldLoadAlbum() {
 		Album album = albumDao.loadAlbum(EXISTENT_ALBUM_ID);
 		assertNotNull(album);
 		assertEquals(EXISTENT_ALBUM_NAME, album.getName());
 	}
-	
+
 	@Test
 	public void findAlbumByArtistIdShouldReturnEmpty() {
-		List<Album> albums = albumDao
-				.findAlbumByArtistId(NON_EXISTENT_ARTIST_ID);
+		List<Album> albums = albumDao.findAlbumByArtistId(NON_EXISTENT_ARTIST_ID);
 		assertNotNull(albums);
 		assertTrue(albums.isEmpty());
 	}
-	
+
 	@Test
 	public void findAlbumByArtistIdShouldReturnResults() {
 		List<Album> albums = albumDao.findAlbumByArtistId(EXISTENT_ARTIST_ID);
@@ -62,7 +61,7 @@ public class AlbumDaoTest extends DatabaseTestCase {
 
 	@Override
 	protected String getDataScriptPath() {
-	    return ALBUM_DATA_SCRIPT;
+		return ALBUM_DATA_SCRIPT;
 	}
-	
+
 }

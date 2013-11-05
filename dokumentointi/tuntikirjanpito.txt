@@ -1,8 +1,12 @@
 - tunteja viime vuonna: 15-25?
 -- tietomalli, yksikkötestejä, kontrollerien aihiot
-- ma 4.11.2013 n. 1,5h
+- ma 4.11.2013 n. 2h
 -- SVN:n repon konvertointi Gitiin
 -- Github-repon luominen
 -- sorsien tuominen Githubiin
+-- sorsien siistimistä ja formatointia
 -- kurssidokkarien selailu ja Labtooliin ilmoittautuminen
-
+- ti 5.11.2013 n. 1h
+-- testimetodien uudellennimeäminen
+-- kantatestien setUp() yhteiseen yläluokkaan
+-- sorsien formatointia (ilmeisesti sössin aiemmin)

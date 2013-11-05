@@ -24,7 +24,7 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.TrackDao;
  */
 @Controller
 public class AlbumController {
-	
+
 	public static final String ALBUM_KEY = "album";
 	public static final String TRACKS_KEY = "tracks";
 	public static final String ALBUM_ARTIST_ID_KEY = "artistId";
@@ -32,14 +32,14 @@ public class AlbumController {
 	public static final String ALBUM_NAME_KEY = "name";
 	static final String DETAILS_VIEW_NAME = "albumDetails";
 	static final String EDIT_VIEW_NAME = "albumEditor";
-	
+
 	private @Autowired
 	AlbumDao albumDao;
 	private @Autowired
 	ArtistDao artistDao;
 	private @Autowired
 	TrackDao trackDao;
-	
+
 	@RequestMapping(value = "/albumDetails", method = RequestMethod.GET)
 	public ModelAndView handleAlbumDetails(@RequestParam Long albumId) {
 		ModelAndView mav = new ModelAndView(DETAILS_VIEW_NAME);
@@ -51,10 +51,9 @@ public class AlbumController {
 		mav.addObject(TRACKS_KEY, tracks);
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/createAlbum", method = RequestMethod.GET)
-	public ModelAndView handleCreateAlbum(
-			@RequestParam(required = false) Long artistId) {
+	public ModelAndView handleCreateAlbum(@RequestParam(required = false) Long artistId) {
 		ModelAndView mav = new ModelAndView(EDIT_VIEW_NAME);
 		if (artistId != null) {
 			Artist artist = artistDao.loadArtist(artistId);
@@ -63,7 +62,7 @@ public class AlbumController {
 		}
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/editAlbum", method = RequestMethod.GET)
 	public ModelAndView handleEditAlbum(@RequestParam Long albumId) {
 		Album album = albumDao.loadAlbum(albumId);
@@ -74,11 +73,10 @@ public class AlbumController {
 		mav.addObject(TRACKS_KEY, tracks);
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/addTrack", method = RequestMethod.POST)
 	public @ResponseBody
-	List<Track> handleAddTrack(@RequestParam Long albumId,
-			@RequestParam String name) {
+	List<Track> handleAddTrack(@RequestParam Long albumId, @RequestParam String name) {
 		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
 		return tracks;
 	}
