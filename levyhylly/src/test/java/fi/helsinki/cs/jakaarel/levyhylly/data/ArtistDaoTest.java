@@ -1,23 +1,14 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
-import static fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration.DATASOURCE_BEAN_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
-import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
 
 /**
  * 
@@ -39,11 +30,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	
 	@Before
 	public void setUp() {
-		DataSource dataSource = context.getBean(DATASOURCE_BEAN_NAME,
-				DataSource.class);
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource(SQL_DATA_SCRIPT));
-		DatabasePopulatorUtils.execute(populator, dataSource);
+		super.setUp();
 		artistDao = new ArtistDao(dataSource);
 	}
 	
@@ -97,6 +84,11 @@ public class ArtistDaoTest extends DatabaseTestCase {
 				.findArtistsByNameLike(EXISTENT_ARTIST_LIKE_QUERY_WRONG_CASE);
 		assertNotNull(artists);
 		assertEquals(1, artists.size());
+	}
+
+	@Override
+	protected String getDataScriptPath() {
+	    return SQL_DATA_SCRIPT;
 	}
 	
 }

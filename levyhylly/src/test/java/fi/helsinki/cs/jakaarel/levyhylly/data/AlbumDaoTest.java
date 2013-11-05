@@ -1,20 +1,14 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
-import static fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration.DATASOURCE_BEAN_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /**
  * 
@@ -35,11 +29,7 @@ public class AlbumDaoTest extends DatabaseTestCase {
 	
 	@Before
 	public void setUp() {
-		DataSource dataSource = context.getBean(DATASOURCE_BEAN_NAME,
-				DataSource.class);
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource(ALBUM_DATA_SCRIPT));
-		DatabasePopulatorUtils.execute(populator, dataSource);
+		super.setUp();
 		albumDao = new AlbumDao(dataSource);
 	}
 	
@@ -68,6 +58,11 @@ public class AlbumDaoTest extends DatabaseTestCase {
 		List<Album> albums = albumDao.findAlbumByArtistId(EXISTENT_ARTIST_ID);
 		assertNotNull(albums);
 		assertEquals(EXISTENT_ARTIST_ALBUM_COUNT, albums.size());
+	}
+
+	@Override
+	protected String getDataScriptPath() {
+	    return ALBUM_DATA_SCRIPT;
 	}
 	
 }

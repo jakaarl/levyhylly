@@ -3,16 +3,10 @@ package fi.helsinki.cs.jakaarel.levyhylly.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static fi.helsinki.cs.jakaarel.levyhylly.TestDatabaseConfiguration.DATASOURCE_BEAN_NAME;
-
-import javax.sql.DataSource;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /**
  * 
@@ -32,11 +26,7 @@ public class TrackDaoTest extends DatabaseTestCase {
 	
 	@Before
 	public void setUp() {
-		DataSource dataSource = context.getBean(DATASOURCE_BEAN_NAME,
-				DataSource.class);
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource(TRACK_DATA_SCRIPT));
-		DatabasePopulatorUtils.execute(populator, dataSource);
+		super.setUp();
 		trackDao = new TrackDao(dataSource);
 	}
 	
@@ -64,6 +54,11 @@ public class TrackDaoTest extends DatabaseTestCase {
 		assertEquals(trackNumber, track.getNumber());
 		assertEquals(trackName, track.getName());
 		assertNull(track.getLength());
+	}
+
+	@Override
+	protected String getDataScriptPath() {
+	    return TRACK_DATA_SCRIPT;
 	}
 	
 }
