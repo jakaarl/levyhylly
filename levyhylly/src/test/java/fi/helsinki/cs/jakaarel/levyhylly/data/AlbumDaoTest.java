@@ -44,19 +44,19 @@ public class AlbumDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test(expected = IncorrectResultSizeDataAccessException.class)
-	public void testLoadAlbumNonExistent() {
+	public void loadAlbumShouldFailForNonExistent() {
 		albumDao.loadAlbum(NON_EXISTENT_ALBUM_ID);
 	}
 	
 	@Test
-	public void testLoadAlbumExistent() {
+	public void shouldLoadAlbum() {
 		Album album = albumDao.loadAlbum(EXISTENT_ALBUM_ID);
 		assertNotNull(album);
 		assertEquals(EXISTENT_ALBUM_NAME, album.getName());
 	}
 	
 	@Test
-	public void testFindAlbumByArtistIdNonExistent() {
+	public void findAlbumByArtistIdShouldReturnEmpty() {
 		List<Album> albums = albumDao
 				.findAlbumByArtistId(NON_EXISTENT_ARTIST_ID);
 		assertNotNull(albums);
@@ -64,7 +64,7 @@ public class AlbumDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test
-	public void testFindAlbumByArtistIdExistent() {
+	public void findAlbumByArtistIdShouldReturnResults() {
 		List<Album> albums = albumDao.findAlbumByArtistId(EXISTENT_ARTIST_ID);
 		assertNotNull(albums);
 		assertEquals(EXISTENT_ARTIST_ALBUM_COUNT, albums.size());

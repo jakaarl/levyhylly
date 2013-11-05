@@ -48,19 +48,19 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test(expected = IncorrectResultSizeDataAccessException.class)
-	public void testLoadArtistNonExistent() {
+	public void loadArtistShouldFailForNonExistent() {
 		artistDao.loadArtist(NON_EXISTENT_ARTIST_ID);
 	}
 	
 	@Test
-	public void testLoadArtistExistent() {
+	public void shouldLoadArtist() {
 		Artist artist = artistDao.loadArtist(EXISTENT_ARTIST_ID);
 		assertNotNull(artist);
 		assertEquals(EXISTENT_ARTIST_NAME, artist.getName());
 	}
 	
 	@Test
-	public void testFindArtistsByNameNonExistent() {
+	public void findArtistsByNameShouldReturnEmpty() {
 		List<Artist> artists = artistDao
 				.findArtistsByName(NON_EXISTENT_ARTIST_NAME);
 		assertNotNull(artists);
@@ -68,7 +68,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test
-	public void testFindArtistsByNameExistent() {
+	public void findArtistsByNameShouldReturnResults() {
 		List<Artist> artists = artistDao
 				.findArtistsByName(EXISTENT_ARTIST_NAME);
 		assertNotNull(artists);
@@ -76,7 +76,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test
-	public void testFindArtistByNameLikeNonExistent() {
+	public void findArtistByNameLikeShouldReturnEmpty() {
 		List<Artist> artists = artistDao
 				.findArtistsByNameLike(NON_EXISTENT_ARTIST_LIKE_QUERY);
 		assertNotNull(artists);
@@ -84,7 +84,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test
-	public void testFindArtistByNameLikeExistent() {
+	public void findArtistByNameLikeShouldReturnResults() {
 		List<Artist> artists = artistDao
 				.findArtistsByNameLike(EXISTENT_ARTIST_LIKE_QUERY);
 		assertNotNull(artists);
@@ -92,7 +92,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test
-	public void testFindArtistByNameLikeExistentWrongCase() {
+	public void findArtistByNameLikeShouldBeCaseInsensitive() {
 		List<Artist> artists = artistDao
 				.findArtistsByNameLike(EXISTENT_ARTIST_LIKE_QUERY_WRONG_CASE);
 		assertNotNull(artists);

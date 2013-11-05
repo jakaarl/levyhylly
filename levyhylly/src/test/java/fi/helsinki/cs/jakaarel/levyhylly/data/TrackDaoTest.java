@@ -41,12 +41,12 @@ public class TrackDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test(expected = IncorrectResultSizeDataAccessException.class)
-	public void testLoadTrackNonExistent() {
+	public void loadTrackShouldFailForNonExistent() {
 		trackDao.loadTrack(NON_EXISTENT_TRACK_ID);
 	}
 	
 	@Test
-	public void testLoadTrackExistent() {
+	public void shouldLoadTrack() {
 		Track track = trackDao.loadTrack(EXISTENT_TRACK_ID);
 		assertNotNull(track);
 		assertEquals(EXISTENT_TRACK_NUMBER, track.getNumber());
@@ -54,7 +54,7 @@ public class TrackDaoTest extends DatabaseTestCase {
 	}
 	
 	@Test
-	public void testCreateTrack() {
+	public void shouldCreateTrack() {
 		Short trackNumber = Short
 				.valueOf((short) (EXISTENT_ALBUM_TRACK_COUNT + 1));
 		String trackName = "Lallallaa foo bar";
