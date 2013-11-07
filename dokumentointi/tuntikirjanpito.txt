@@ -11,3 +11,6 @@
 -- kantatestien setUp() yhteiseen yläluokkaan
 -- sorsien formatointia (ilmeisesti sössin aiemmin)
 -- luokkakaavion luonnos
+- to 6.11.2013 n. 1,5h
+-- luokkakaavion hieromista
+-- vanhojen sorsien lueskelua
