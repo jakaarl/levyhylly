@@ -1,11 +1,16 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
+import java.text.DecimalFormat;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
+
 /**
  * 
  * @author jakaarl
  */
 public class Track {
 
+	private static final String LENGTH_FORMAT = "00";
 	private Long id;
 	private Short number;
 	private String name;
@@ -34,6 +39,21 @@ public class Track {
 
 	public Short getLength() {
 		return length;
+	}
+	
+	public String getFormattedLength() {
+		NumberFormat formatter = new DecimalFormat(LENGTH_FORMAT);
+		int hours = length / (60 * 60);
+		int minutes = length % (60 * 60) / 60;
+		int seconds = length % 60;
+		StringBuilder sb = new StringBuilder();
+		if (hours > 0) {
+			sb.append(formatter.format(hours) + ':');
+		}
+		sb.append(formatter.format(minutes) + ':');
+		sb.append(formatter.format(seconds));
+		return sb.toString();
+		
 	}
 
 	public Long getAlbumId() {

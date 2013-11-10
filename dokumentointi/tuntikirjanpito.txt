@@ -14,5 +14,7 @@
 - to 6.11.2013 n. 1,5h
 -- luokkakaavion hieromista
 -- vanhojen sorsien lueskelua
-- su 10.11. < 1h
+- su 10.11. n. 2,5h
 -- testidatan ajaminen kantaan startatessa
+-- raidan pituuden esitysformatointi, testi
+-- WIP: albumien luomis- ja editoimisnäyttö
