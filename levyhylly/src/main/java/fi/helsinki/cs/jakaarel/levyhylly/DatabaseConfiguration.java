@@ -47,6 +47,7 @@ public class DatabaseConfiguration {
 			dataSource = inMemoryDatabase.getDataSource();
 		}
 		if (Boolean.getBoolean(POPULATE_TEST_DATA_KEY)) {
+			LOGGER.info("Inserting test data to database.");
 			ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 			populator.addScript(new ClassPathResource(TRACK_DATA_FILE));
 			DatabasePopulatorUtils.execute(populator, dataSource);
