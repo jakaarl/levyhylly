@@ -1,5 +1,6 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
+import static fi.helsinki.cs.jakaarel.levyhylly.DatabaseConfiguration.TRACK_DATA_FILE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -14,7 +15,6 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
  */
 public class TrackDaoTest extends DatabaseTestCase {
 
-	private static final String TRACK_DATA_SCRIPT = "track-data.sql";
 	private static final Long NON_EXISTENT_TRACK_ID = Long.MAX_VALUE;
 	private static final Long EXISTENT_TRACK_ID = Long.valueOf(1);
 	private static final Short EXISTENT_TRACK_NUMBER = Short.valueOf((short) 1);
@@ -56,7 +56,7 @@ public class TrackDaoTest extends DatabaseTestCase {
 
 	@Override
 	protected String getDataScriptPath() {
-		return TRACK_DATA_SCRIPT;
+		return TRACK_DATA_FILE;
 	}
 
 }

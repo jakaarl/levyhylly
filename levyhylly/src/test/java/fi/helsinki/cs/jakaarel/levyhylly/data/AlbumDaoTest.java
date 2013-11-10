@@ -1,5 +1,6 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
+import static fi.helsinki.cs.jakaarel.levyhylly.DatabaseConfiguration.ALBUM_DATA_FILE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +18,6 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
  */
 public class AlbumDaoTest extends DatabaseTestCase {
 
-	private static final String ALBUM_DATA_SCRIPT = "album-data.sql";
 	private static final Long NON_EXISTENT_ALBUM_ID = Long.MAX_VALUE;
 	private static final Long EXISTENT_ALBUM_ID = Long.valueOf(1);
 	private static final String EXISTENT_ALBUM_NAME = "Charlotta";
@@ -61,7 +61,7 @@ public class AlbumDaoTest extends DatabaseTestCase {
 
 	@Override
 	protected String getDataScriptPath() {
-		return ALBUM_DATA_SCRIPT;
+		return ALBUM_DATA_FILE;
 	}
 
 }

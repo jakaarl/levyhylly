@@ -1,5 +1,6 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
+import static fi.helsinki.cs.jakaarel.levyhylly.DatabaseConfiguration.ARTIST_DATA_FILE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -13,11 +14,9 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 /**
  * 
  * @author Jani Kaarela
- * 
  */
 public class ArtistDaoTest extends DatabaseTestCase {
 
-	private static final String SQL_DATA_SCRIPT = "artist-data.sql";
 	private static final Long NON_EXISTENT_ARTIST_ID = Long.MAX_VALUE;
 	private static final String NON_EXISTENT_ARTIST_NAME = "Janttu ja Himmeet Tähdet";
 	private static final Long EXISTENT_ARTIST_ID = Long.valueOf(1);
@@ -83,7 +82,7 @@ public class ArtistDaoTest extends DatabaseTestCase {
 
 	@Override
 	protected String getDataScriptPath() {
-		return SQL_DATA_SCRIPT;
+		return ARTIST_DATA_FILE;
 	}
 
 }

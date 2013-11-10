@@ -14,3 +14,5 @@
 - to 6.11.2013 n. 1,5h
 -- luokkakaavion hieromista
 -- vanhojen sorsien lueskelua
+- su 10.11. < 1h
+-- testidatan ajaminen kantaan startatessa
