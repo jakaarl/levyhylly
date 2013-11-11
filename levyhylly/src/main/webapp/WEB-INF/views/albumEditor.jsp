@@ -6,7 +6,7 @@
     <title><fmt:message key="app.title"/></title>
     <script>
       function addTrack() {
-      
+      	console.log("Add track clicked!");
       }
     </script>
   </head>
@@ -31,6 +31,9 @@
           <li class="track">${track.number} ${track.name} (${track.formattedLength})</li>
         </c:forEach>
         </ul>
+        <input id="addedTrackName" type="text" name="track_${tracks.length}_name" value="" size="30" maxLength="128"/>
+        <input id="addedTrackLength" type="text" name="track_${tracks.length}_length" value="" size="8" maxlength="8"/>
+        <input id="addTrack" type="button" name="addTrack" value="<fmt:message key="add.track"/>" onclick="addTrack()"/>
       </form>
     </p>
   </body>

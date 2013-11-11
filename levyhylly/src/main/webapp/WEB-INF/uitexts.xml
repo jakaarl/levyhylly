@@ -14,4 +14,7 @@
   <entry key="album.nameLabel">Name</entry>
   <entry key="album.yearLabel">Year</entry>
   <entry key="album.tracksLabel">Tracks</entry>
+  <entry key="track.name">Track name</entry>
+  <entry key="track.length">Length</entry>
+  <entry key="add.track">Add track</entry>
 </properties>

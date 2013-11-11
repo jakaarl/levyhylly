@@ -1,12 +1,12 @@
 package fi.helsinki.cs.jakaarel.levyhylly.data;
 
 import java.text.DecimalFormat;
-import java.text.MessageFormat;
 import java.text.NumberFormat;
 
 /**
+ * An album track.
  * 
- * @author jakaarl
+ * @author Jani Kaarela
  */
 public class Track {
 
@@ -17,6 +17,15 @@ public class Track {
 	private Short length;
 	private Long albumId;
 
+	/**
+	 * Constructs a new track.
+	 * 
+	 * @param id		track unique id.
+	 * @param number	track number.
+	 * @param name		track name.
+	 * @param length	track length in seconds.
+	 * @param albumId	album unique id.
+	 */
 	public Track(Long id, Short number, String name, Short length, Long albumId) {
 		this.id = id;
 		this.number = number;
@@ -41,6 +50,11 @@ public class Track {
 		return length;
 	}
 	
+	/**
+	 * Gets track length, formatted as hours (if applicable), minutes and seconds separated by a &quot;:&quot;.
+	 * 
+	 * @return	formatted track length.
+	 */
 	public String getFormattedLength() {
 		NumberFormat formatter = new DecimalFormat(LENGTH_FORMAT);
 		int hours = length / (60 * 60);
