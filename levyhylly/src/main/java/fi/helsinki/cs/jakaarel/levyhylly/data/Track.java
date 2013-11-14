@@ -58,7 +58,7 @@ public class Track {
 	public String getFormattedLength() {
 		NumberFormat formatter = new DecimalFormat(LENGTH_FORMAT);
 		int hours = length / (60 * 60);
-		int minutes = length % (60 * 60) / 60;
+		int minutes = (length % (60 * 60)) / 60;
 		int seconds = length % 60;
 		StringBuilder sb = new StringBuilder();
 		if (hours > 0) {

@@ -18,3 +18,10 @@
 -- testidatan ajaminen kantaan startatessa
 -- raidan pituuden esitysformatointi, testi
 -- WIP: albumien luomis- ja editoimisnäyttö
+- ti 12.11. n. 1,5h
+-- luomis-/editoimisnäytön JavaScriptit
+- to 14.11. n. 3h
+-- luomis-/editoimisnäyttö
+-- JavaScript-opiskelua
+--- todellakin täytyy ottaa käyttöön jokin kätevä kirjasto!
+-- albumin tallennuksen hahmottelua

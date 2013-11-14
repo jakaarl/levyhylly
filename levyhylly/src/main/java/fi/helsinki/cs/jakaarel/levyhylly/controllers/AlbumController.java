@@ -1,13 +1,16 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
@@ -32,6 +35,7 @@ public class AlbumController {
 	public static final String ALBUM_NAME_KEY = "name";
 	static final String DETAILS_VIEW_NAME = "albumDetails";
 	static final String EDIT_VIEW_NAME = "albumEditor";
+	private static final Logger LOGGER = Logger.getLogger(AlbumController.class.getName());
 
 	private @Autowired
 	AlbumDao albumDao;
@@ -74,10 +78,17 @@ public class AlbumController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/addTrack", method = RequestMethod.POST)
-	public @ResponseBody
-	List<Track> handleAddTrack(@RequestParam Long albumId, @RequestParam String name) {
-		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
-		return tracks;
+	@RequestMapping(value = "/saveAlbum", method = RequestMethod.POST)
+	public ModelAndView handleSaveAlbum(@RequestBody MultiValueMap<String, String> formParams) {
+		// log submit data, remove when implemented!
+		for (Map.Entry<String, List<String>> entry : formParams.entrySet()) {
+			for (String value : entry.getValue()) {
+				LOGGER.info(entry.getKey() + ": " + value);
+			}
+		}
+		throw new UnsupportedOperationException("Hang on, we'll get there!");
+		// TODO: save/insert
+		/*Long albumId = Long.valueOf(formParams.getFirst(ALBUM_KEY));
+		return handleAlbumDetails(albumId);*/
 	}
 }
