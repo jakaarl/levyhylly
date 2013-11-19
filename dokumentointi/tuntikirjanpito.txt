@@ -1,3 +1,4 @@
+DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 - tunteja viime vuonna: 15-25?
 -- tietomalli, yksikkötestejä, kontrollerien aihiot
 - ma 4.11.2013 n. 2h
@@ -25,3 +26,12 @@
 -- JavaScript-opiskelua
 --- todellakin täytyy ottaa käyttöön jokin kätevä kirjasto!
 -- albumin tallennuksen hahmottelua
+- pe 15.11. n. 1h
+-- JavaScript-opiskelua, lähinnä eri frameworkeihin tutustumista
+-- ... ja voittaja on: AngularJS!
+- ma 18.11. n. 1h
+-- AngularJS:ään tutustumista
+- ti 19.11. n. 2,5h
+-- AngularJS:n opiskelua, toteutus alkutekijöissään
+-- REST-henkinen metodi raitojen hakemiseen
+--- /album/{id}/tracks palauttaa raidat JSON:ina

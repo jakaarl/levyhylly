@@ -56,7 +56,7 @@
   </head>
   <body>
     <jsp:include page="../includes/header.jsp"/>
-    <p>
+    <p ng-app="levyhylly">
       <form id="albumForm" action="saveAlbum" method="POST">
       <c:if test="${not empty artistId}">
         <input type="hidden" name="artistId" value="${artistId}"/>
@@ -85,5 +85,10 @@
         <input type="submit" name="save" value="<fmt:message key="save.album"/>"/>
       </form>
     </p>
+    <script src="lib/angular/angular.js"/>
+    <script src="lib/amgular/angular-resource.js"/>
+    <script src="js/services.js"/>
+    <script src="js/controllers.js"/>
+    <script src="js/app.js"/>
   </body>
 </html>

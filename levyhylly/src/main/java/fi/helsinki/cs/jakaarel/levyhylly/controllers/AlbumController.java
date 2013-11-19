@@ -7,10 +7,12 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
@@ -90,5 +92,11 @@ public class AlbumController {
 		// TODO: save/insert
 		/*Long albumId = Long.valueOf(formParams.getFirst(ALBUM_KEY));
 		return handleAlbumDetails(albumId);*/
+	}
+	
+	@RequestMapping(value="/album/{albumId}/tracks", method = RequestMethod.GET)
+	public @ResponseBody List<Track> loadTracks(@PathVariable Long albumId) {
+		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
+		return tracks;
 	}
 }
