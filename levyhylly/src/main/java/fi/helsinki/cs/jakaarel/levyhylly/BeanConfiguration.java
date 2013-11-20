@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 /**
+ * Spring beans configuration.
  * 
  * @author Jani Kaarela
- * 
  */
 @Configuration
 public class BeanConfiguration {

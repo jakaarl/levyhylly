@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 import fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper;
 
 /**
+ * Data access object for {@link Album}s.
  * 
  * @author Jani Kaarela
- * 
  */
 @Component
 public class AlbumDao extends JdbcDaoSupport {
@@ -37,14 +37,41 @@ public class AlbumDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 
+	/**
+	 * Loads album by identifier.
+	 * 
+	 * @param id	album identifier.
+	 * 
+	 * @return	album object.
+	 * 
+	 * @throws DataAccessException	if load fails.
+	 */
 	public Album loadAlbum(Long id) throws DataAccessException {
 		return getJdbcTemplate().queryForObject(LOAD_QUERY, AlbumRowMapper.INSTANCE, new Object[] { id });
 	}
 
+	/**
+	 * Finds albums by artist identifier.
+	 * 
+	 * @param artistId	artist identifier.
+	 * 
+	 * @return	list of found albums.
+	 * 	
+	 * @throws DataAccessException	if finding albums fails.
+	 */
 	public List<Album> findAlbumByArtistId(Long artistId) throws DataAccessException {
 		return getJdbcTemplate().query(FIND_BY_ARTIST_ID_QUERY, AlbumRowMapper.INSTANCE, new Object[] { artistId });
 	}
 
+	/**
+	 * Finds albums by name, or part of name.
+	 * 
+	 * @param name	album name (or part of it).
+	 * 
+	 * @return	list of found albums.
+	 * 
+	 * @throws DataAccessException	if finding albums fails.
+	 */
 	public List<Album> findAlbumByNameLike(String name) throws DataAccessException {
 		String likeifiedName = "%" + StringHelper.escapeLikeWildcards(name).toLowerCase() + "%";
 		return getJdbcTemplate().query(FIND_BY_ALBUM_NAME_QUERY, AlbumRowMapper.INSTANCE,

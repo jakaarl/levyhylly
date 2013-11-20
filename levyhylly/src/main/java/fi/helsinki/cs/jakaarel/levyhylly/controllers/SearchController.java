@@ -15,9 +15,9 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
 import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
 
 /**
+ * Controller for performing artist and album searches.
  * 
  * @author Jani Kaarela
- * 
  */
 @Controller
 public class SearchController {
@@ -34,6 +34,14 @@ public class SearchController {
 	private @Autowired
 	ArtistDao artistDao;
 
+	/**
+	 * Handles search requests.
+	 * 
+	 * @param searchTerm	search term.
+	 * @param submitButton	submit button, determines if searching by artist or album.
+	 * 
+	 * @return	a view displaying search results.
+	 */
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ModelAndView handleSearch(@RequestParam String searchTerm, @RequestParam String submitButton) {
 		ModelAndView mav = null;

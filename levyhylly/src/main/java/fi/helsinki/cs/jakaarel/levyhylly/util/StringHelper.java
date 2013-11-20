@@ -1,6 +1,7 @@
 package fi.helsinki.cs.jakaarel.levyhylly.util;
 
 /**
+ * Utility methods for handling <code>String</code>s.
  * 
  * @author jakaarl
  */

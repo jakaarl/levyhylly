@@ -23,13 +23,16 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.Track;
 import fi.helsinki.cs.jakaarel.levyhylly.data.TrackDao;
 
 /**
+ * Controller for all things album-related.
  * 
  * @author Jani Kaarela
- * 
  */
 @Controller
 public class AlbumController {
 
+	/*
+	 * TODO: move all the REST methods to a separate controller for clarity? Or RESTify completely?
+	 */
 	public static final String ALBUM_KEY = "album";
 	public static final String TRACKS_KEY = "tracks";
 	public static final String ALBUM_ARTIST_ID_KEY = "artistId";
@@ -46,6 +49,13 @@ public class AlbumController {
 	private @Autowired
 	TrackDao trackDao;
 
+	/**
+	 * Loads album details and displays them.
+	 * 
+	 * @param albumId	album identifier.
+	 * 
+	 * @return	a <code>ModelAndView</code> of album details.
+	 */
 	@RequestMapping(value = "/albumDetails", method = RequestMethod.GET)
 	public ModelAndView handleAlbumDetails(@RequestParam Long albumId) {
 		ModelAndView mav = new ModelAndView(DETAILS_VIEW_NAME);
@@ -58,6 +68,13 @@ public class AlbumController {
 		return mav;
 	}
 
+	/**
+	 * Displays album editor for a newly created album.
+	 * 
+	 * @param artistId	artist identifier if existing artist, <code>null</code> if not.
+	 * 
+	 * @return	a <code>ModelAndView</code> for album creation.
+	 */
 	@RequestMapping(value = "/createAlbum", method = RequestMethod.GET)
 	public ModelAndView handleCreateAlbum(@RequestParam(required = false) Long artistId) {
 		ModelAndView mav = new ModelAndView(EDIT_VIEW_NAME);
@@ -69,6 +86,13 @@ public class AlbumController {
 		return mav;
 	}
 
+	/**
+	 * Displays album editor for an existing album.
+	 * 
+	 * @param albumId	album identifier of existing album.
+	 * 
+	 * @return	a <code>ModelAndView</code> for album editing.
+	 */
 	@RequestMapping(value = "/editAlbum", method = RequestMethod.GET)
 	public ModelAndView handleEditAlbum(@RequestParam Long albumId) {
 		Album album = albumDao.loadAlbum(albumId);
@@ -80,6 +104,13 @@ public class AlbumController {
 		return mav;
 	}
 
+	/**
+	 * Saves an edited or newly created album.
+	 * 
+	 * @param formParams	form containing the album details, including tracks.
+	 * 
+	 * @return	a <code>ModelAndView</code> displaying the edited/created album.
+	 */
 	@RequestMapping(value = "/saveAlbum", method = RequestMethod.POST)
 	public ModelAndView handleSaveAlbum(@RequestBody MultiValueMap<String, String> formParams) {
 		// log submit data, remove when implemented!
@@ -94,6 +125,13 @@ public class AlbumController {
 		return handleAlbumDetails(albumId);*/
 	}
 	
+	/**
+	 * Fetches track listing for given album.
+	 * 
+	 * @param albumId	album identifier.
+	 * 
+	 * @return	album tracks, rendered as JSON.
+	 */
 	@RequestMapping(value="/album/{albumId}/tracks", method = RequestMethod.GET)
 	public @ResponseBody List<Track> loadTracks(@PathVariable Long albumId) {
 		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);

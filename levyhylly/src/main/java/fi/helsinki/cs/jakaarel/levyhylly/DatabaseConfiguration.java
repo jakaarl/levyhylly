@@ -17,6 +17,7 @@ import org.springframework.jndi.JndiTemplate;
 import fi.helsinki.cs.jakaarel.levyhylly.util.DefaultInMemoryDatabase;
 
 /**
+ * Spring database configuration.
  * 
  * @author Jani Kaarela
  */

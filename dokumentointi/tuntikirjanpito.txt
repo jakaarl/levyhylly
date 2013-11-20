@@ -35,3 +35,7 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 -- AngularJS:n opiskelua, toteutus alkutekijöissään
 -- REST-henkinen metodi raitojen hakemiseen
 --- /album/{id}/tracks palauttaa raidat JSON:ina
+- ke 20.11. n. 1,5h
+-- albumien editoinnin uuden, seksikkään toteutuksen suunnittelua
+-- muutama sekvenssikaavio (kuvaavat tahtotilaa, eivät nykyistä koodia)
+-- doc commenttien lisäilyä

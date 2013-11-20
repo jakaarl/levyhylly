@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper;
 
 /**
+ * Data access object for {@link Track}s.
  * 
  * @author jakaarl
  */
@@ -45,20 +46,59 @@ public class TrackDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 
+	/**
+	 * Loads track by identifier.
+	 * 
+	 * @param id	track identifier.
+	 * 
+	 * @return	track object.
+	 * 
+	 * @throws DataAccessException	if load fails.
+	 */
 	public Track loadTrack(Long id) throws DataAccessException {
 		return getJdbcTemplate().queryForObject(LOAD_QUERY, TrackRowMapper.INSTANCE, new Object[] { id });
 	}
 
+	/**
+	 * Finds track by name, or part of name.
+	 * 
+	 * @param name	name, or part of it.
+	 * 
+	 * @return	matching tracks.
+	 * 
+	 * @throws DataAccessException	if query fails.
+	 */
 	public List<Track> findTrackByNameLike(String name) throws DataAccessException {
 		String likeifiedName = "%" + StringHelper.escapeLikeWildcards(name).toLowerCase() + "%";
 		return getJdbcTemplate()
 				.query(FIND_BY_NAME_LIKE_QUERY, TrackRowMapper.INSTANCE, new Object[] { likeifiedName });
 	}
 
+	/**
+	 * Finds tracks by album id.
+	 * 
+	 * @param albumId	album identifier.
+	 * 
+	 * @return	album tracks.
+	 * 
+	 * @throws DataAccessException	if 	query fails.
+	 */
 	public List<Track> findTrackByAlbumId(Long albumId) throws DataAccessException {
 		return getJdbcTemplate().query(FIND_BY_ALBUM_ID_QUERY, TrackRowMapper.INSTANCE, new Object[] { albumId });
 	}
 
+	/**
+	 * Creates a new track.
+	 * 
+	 * @param albumId	album identifier.
+	 * @param number	track number.
+	 * @param name		track name.
+	 * @param length	track length.
+	 * 
+	 * @return	created track object.
+	 * 
+	 * @throws DataAccessException	if creation fails.
+	 */
 	public Track createTrack(final Long albumId, final Short number, final String name, final Short length)
 			throws DataAccessException {
 		KeyHolder keyHolder = new GeneratedKeyHolder();

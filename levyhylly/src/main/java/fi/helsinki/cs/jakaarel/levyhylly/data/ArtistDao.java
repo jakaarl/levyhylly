@@ -15,8 +15,9 @@ import org.springframework.stereotype.Component;
 import fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper;
 
 /**
- * @author Jani Kaarela
+ * Data access object for {@link Artist}s.
  * 
+ * @author Jani Kaarela
  */
 @Component
 public class ArtistDao extends JdbcDaoSupport {
@@ -35,14 +36,41 @@ public class ArtistDao extends JdbcDaoSupport {
 		setDataSource(dataSource);
 	}
 
+	/**
+	 * Loads artist by identifier.
+	 * 
+	 * @param id	artist identifier.
+	 * 
+	 * @return	artist object.
+	 * 
+	 * @throws DataAccessException	if load fails.
+	 */
 	public Artist loadArtist(Long id) throws DataAccessException {
 		return getJdbcTemplate().queryForObject(LOAD_QUERY, ArtistRowMapper.INSTANCE, new Object[] { id });
 	}
 
+	/**
+	 * Finds artist by name.
+	 * 
+	 * @param name	artist name.
+	 * 
+	 * @return	result artists.
+	 * 
+	 * @throws DataAccessException	if query fails.
+	 */
 	public List<Artist> findArtistsByName(String name) throws DataAccessException {
 		return getJdbcTemplate().query(FIND_BY_NAME_QUERY, ArtistRowMapper.INSTANCE, new Object[] { name });
 	}
 
+	/**
+	 * Finds artist by name, or part of name.
+	 * 
+	 * @param name	artist name (or part of it).
+	 * 
+	 * @return	result artists.
+	 * 
+	 * @throws DataAccessException	if query fails.
+	 */
 	public List<Artist> findArtistsByNameLike(String name) throws DataAccessException {
 		String likeifiedName = "%" + StringHelper.escapeLikeWildcards(name).toLowerCase() + "%";
 		return getJdbcTemplate().query(FIND_BY_NAME_LIKE_QUERY, ArtistRowMapper.INSTANCE,
