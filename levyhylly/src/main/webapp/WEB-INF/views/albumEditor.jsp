@@ -86,7 +86,7 @@
       </form>
     </p>
     <script src="lib/angular/angular.js"/>
-    <script src="lib/amgular/angular-resource.js"/>
+    <script src="lib/angular/angular-resource.js"/>
     <script src="js/services.js"/>
     <script src="js/controllers.js"/>
     <script src="js/app.js"/>
