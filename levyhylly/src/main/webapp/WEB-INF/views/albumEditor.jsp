@@ -2,9 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!doctype html>
 <html>
   <head>
     <title><fmt:message key="app.title"/></title>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-resource.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
     <script>
     /* OMG horror, will need to make a proper UI with a handy JS library! */
       var nextTrackNumber = ${fn:length(tracks) + 1};
@@ -56,7 +62,10 @@
   </head>
   <body>
     <jsp:include page="../includes/header.jsp"/>
-    <p ng-app="levyhylly">
+    <p>
+      <div ng-app="levyhylly" ng-controller="TrackController">
+      {{ loadTracks(1) }}
+      </div>
       <form id="albumForm" action="saveAlbum" method="POST">
       <c:if test="${not empty artistId}">
         <input type="hidden" name="artistId" value="${artistId}"/>
@@ -85,10 +94,5 @@
         <input type="submit" name="save" value="<fmt:message key="save.album"/>"/>
       </form>
     </p>
-    <script src="lib/angular/angular.js"/>
-    <script src="lib/angular/angular-resource.js"/>
-    <script src="js/services.js"/>
-    <script src="js/controllers.js"/>
-    <script src="js/app.js"/>
   </body>
 </html>
