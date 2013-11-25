@@ -134,6 +134,7 @@ public class AlbumController {
 	 */
 	@RequestMapping(value="/album/{albumId}/tracks", method = RequestMethod.GET)
 	public @ResponseBody List<Track> loadTracks(@PathVariable Long albumId) {
+		System.out.println("loadTracks, album: " + albumId);
 		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
 		return tracks;
 	}
