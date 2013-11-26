@@ -21,10 +21,11 @@
         <input type="text" name="year" size="5" maxLength="4" value="<c:out value="${album.year}"></c:out>"/><br/>
         <label for="track"><fmt:message key="album.tracksLabel"/></label>
         <ul id="trackListing">
-          <div ng-controller="LoadTracksController" ng-init="load(${album.id})"/>
+          <div ng-controller="TracksController" ng-init="loadTracks(${album.id})"/>
             <div ng-repeat="track in tracks">
               <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}}</li>
             </div>
+            
           </div>
         </ul>
         <input id="addedTrackName" type="text" name="addedTrackName" value="" size="30" maxLength="128"/>

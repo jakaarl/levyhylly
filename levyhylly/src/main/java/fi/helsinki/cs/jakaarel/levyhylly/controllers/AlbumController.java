@@ -132,9 +132,34 @@ public class AlbumController {
 	 * 
 	 * @return	album tracks, rendered as JSON.
 	 */
-	@RequestMapping(value="/album/{albumId}/tracks", method = RequestMethod.GET)
+	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.GET)
 	public @ResponseBody List<Track> loadTracks(@PathVariable Long albumId) {
 		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
 		return tracks;
+	}
+	
+	/**
+	 * Adds a new track to an album.
+	 * 
+	 * @param albumId	album identifier.
+	 * @param track		track to add.
+	 * 
+	 * @return	newly created track, rendered as JSON.
+	 */
+	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST)
+	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody AddedTrack track) {
+		return trackDao.createTrack(albumId, track.number, track.name, track.length);
+	}
+	
+	/**
+	 * Simple data transfer object for adding tracks.
+	 * 
+	 * @author Jani Kaarela (@gmail.com)
+	 *
+	 */
+	public static class AddedTrack {
+		public Short number;
+		public String name;
+		public Short length;
 	}
 }

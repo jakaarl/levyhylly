@@ -1,9 +1,9 @@
 'use strict';
 
 var controllersModule = angular.module('levyhylly.controllers', ['levyhylly.services']);
-controllersModule.controller('LoadTracksController', function($scope, TrackService) {
+controllersModule.controller('TracksController', function($scope, Track) {
   $scope.tracks = [];
-  $scope.load = function(albumId) {
-    $scope.tracks = TrackService.loadTracks(albumId);
+  $scope.loadTracks = function(albumId) {
+    $scope.tracks = Track.query({ 'albumId': albumId });
   };
 });

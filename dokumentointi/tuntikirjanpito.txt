@@ -39,3 +39,9 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 -- albumien editoinnin uuden, seksikkään toteutuksen suunnittelua
 -- muutama sekvenssikaavio (kuvaavat tahtotilaa, eivät nykyistä koodia)
 -- doc commenttien lisäilyä
+- su 24.11. n. 2,5h
+-- AngularJS:n kanssa tuskailua, "trial and error"
+- ti 26.11. n. 3h
+-- RESTisti haettujen raitojen rendaaminen UI:hin
+-- REST-operaatio raitojen lisäämiseksi
+
