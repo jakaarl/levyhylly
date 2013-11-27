@@ -4,6 +4,7 @@ import static fi.helsinki.cs.jakaarel.levyhylly.DatabaseConfiguration.TRACK_DATA
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +53,20 @@ public class TrackDaoTest extends DatabaseTestCase {
 		assertEquals(trackNumber, track.getNumber());
 		assertEquals(trackName, track.getName());
 		assertNull(track.getLength());
+	}
+	
+	@Test
+	public void shouldDeleteTrack() {
+		Track track = new Track(EXISTENT_TRACK_ID, EXISTENT_TRACK_NUMBER, EXISTENT_TRACK_NAME, null, null);
+		Track deletedTrack = trackDao.deleteTrack(track);
+		assertSame(deletedTrack, track);
+	}
+	
+	@Test
+	public void shouldNotDeleteTrack() {
+		Track track = new Track(NON_EXISTENT_TRACK_ID, null, "Totally bogus", null, null);
+		Track deletedTrack = trackDao.deleteTrack(track);
+		assertNull(deletedTrack);
 	}
 
 	@Override

@@ -39,6 +39,7 @@ public class TrackDao extends JdbcDaoSupport {
 	private static final String FIND_BY_NAME_LIKE_QUERY = "SELECT id, track_number, name, track_length, album_id FROM track WHERE LOWER(name) LIKE ? ORDER BY album_id, track_number";
 	private static final String FIND_BY_ALBUM_ID_QUERY = "SELECT id, track_number, name, track_length, album_id FROM track WHERE album_id = ? ORDER BY track_number";
 	private static final String INSERT_TRACK_STATEMENT = "INSERT INTO track (track_number, name, track_length, album_id) values (?, ?, ?, ?)";
+	private static final String DELETE_TRACK_STATEMENT = "DELETE FROM track WHERE id = ?";
 
 	@Autowired
 	public TrackDao(DataSource dataSource) {
@@ -120,6 +121,20 @@ public class TrackDao extends JdbcDaoSupport {
 		}, keyHolder);
 		Long id = keyHolder.getKey().longValue();
 		return new Track(id, number, name, length, albumId);
+	}
+	
+	/**
+	 * Deletes the given track (if found).
+	 * 
+	 * @param track	track to delete.
+	 * 
+	 * @return	the deleted track, or <code>null</code> if no such track exists.
+	 * 
+	 * @throws DataAccessException	if deletion fails.
+	 */
+	public Track deleteTrack(Track track) throws DataAccessException {
+		int affectedRows = getJdbcTemplate().update(DELETE_TRACK_STATEMENT, new Object[] { track.getId() });
+		return (affectedRows == 0 ? null : track);
 	}
 
 	private static class TrackRowMapper implements RowMapper<Track> {

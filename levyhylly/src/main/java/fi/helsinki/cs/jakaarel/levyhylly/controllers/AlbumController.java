@@ -148,6 +148,17 @@ public class AlbumController {
 	 */
 	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST)
 	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody AddedTrack track) {
+		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
+		if (track.number != null) {
+			if (albumTracks.size() > track.number) {
+				Track trackToReplace = albumTracks.get(track.number - 1);
+				trackDao.deleteTrack(trackToReplace);
+			} else {
+				// no such track, error status & message?
+			}
+		} else {
+			track.number = new Short((short) (albumTracks.size() + 1));
+		}
 		return trackDao.createTrack(albumId, track.number, track.name, track.length);
 	}
 	

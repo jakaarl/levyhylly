@@ -44,4 +44,7 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 - ti 26.11. n. 3h
 -- RESTisti haettujen raitojen rendaaminen UI:hin
 -- REST-operaatio raitojen lisäämiseksi
-
+- ke 27.11. n. 1,5h
+-- raitojen lisääminen myös korvaa olemassaolevia raitoja
+-- kokeiltu lisääminen ja korvaaminen Postmanilla (UI vaiheessa)
+-- DAO-metodi raidan poistamiselle, testit sille
