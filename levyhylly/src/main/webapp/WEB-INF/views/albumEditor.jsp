@@ -23,7 +23,7 @@
         <ul id="trackListing">
           <div ng-controller="TracksController" ng-init="loadTracks(${album.id})"/>
             <div ng-repeat="track in tracks">
-              <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}}</li>
+              <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}} <button type="button" ng-click="removeTrack(track.albumId, track.number)">[x]</button></li>
             </div>
             
           </div>

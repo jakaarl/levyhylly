@@ -35,11 +35,17 @@ public class TrackDao extends JdbcDaoSupport {
 	private static final String LENGTH_COLUMN = "track_length";
 	private static final String ALBUM_ID_COLUMN = "album_id";
 
-	private static final String LOAD_QUERY = "SELECT id, track_number, name, track_length, album_id FROM track WHERE id = ?";
-	private static final String FIND_BY_NAME_LIKE_QUERY = "SELECT id, track_number, name, track_length, album_id FROM track WHERE LOWER(name) LIKE ? ORDER BY album_id, track_number";
-	private static final String FIND_BY_ALBUM_ID_QUERY = "SELECT id, track_number, name, track_length, album_id FROM track WHERE album_id = ? ORDER BY track_number";
-	private static final String INSERT_TRACK_STATEMENT = "INSERT INTO track (track_number, name, track_length, album_id) values (?, ?, ?, ?)";
+	private static final String LOAD_QUERY =
+			"SELECT id, track_number, name, track_length, album_id FROM track WHERE id = ?";
+	private static final String FIND_BY_NAME_LIKE_QUERY =
+			"SELECT id, track_number, name, track_length, album_id FROM track WHERE LOWER(name) LIKE ? ORDER BY album_id, track_number";
+	private static final String FIND_BY_ALBUM_ID_QUERY =
+			"SELECT id, track_number, name, track_length, album_id FROM track WHERE album_id = ? ORDER BY track_number";
+	private static final String INSERT_TRACK_STATEMENT =
+			"INSERT INTO track (track_number, name, track_length, album_id) values (?, ?, ?, ?)";
 	private static final String DELETE_TRACK_STATEMENT = "DELETE FROM track WHERE id = ?";
+	private static final String DECREMENT_TRACK_NUMBERS_STATEMENT =
+			"UPDATE track SET track_number = (track_number - 1) WHERE album_id = ? AND track_number > ?";
 
 	@Autowired
 	public TrackDao(DataSource dataSource) {
@@ -133,8 +139,12 @@ public class TrackDao extends JdbcDaoSupport {
 	 * @throws DataAccessException	if deletion fails.
 	 */
 	public Track deleteTrack(Track track) throws DataAccessException {
-		int affectedRows = getJdbcTemplate().update(DELETE_TRACK_STATEMENT, new Object[] { track.getId() });
-		return (affectedRows == 0 ? null : track);
+		int deletedRows = getJdbcTemplate().update(DELETE_TRACK_STATEMENT, new Object[] { track.getId() });
+		if (deletedRows > 0) {
+			getJdbcTemplate().update(DECREMENT_TRACK_NUMBERS_STATEMENT,
+					new Object[] { track.getAlbumId(), track.getNumber() });
+		}
+		return (deletedRows == 0 ? null : track);
 	}
 
 	private static class TrackRowMapper implements RowMapper<Track> {

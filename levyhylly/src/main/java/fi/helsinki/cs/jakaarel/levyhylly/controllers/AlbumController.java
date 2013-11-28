@@ -162,6 +162,19 @@ public class AlbumController {
 		return trackDao.createTrack(albumId, track.number, track.name, track.length);
 	}
 	
+	@RequestMapping(value = "/albums/{albumId}/tracks/{number}", method = RequestMethod.DELETE)
+	public @ResponseBody Track removeTrack(@PathVariable Long albumId, @PathVariable Short number) {
+		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
+		Track trackToRemove = null;
+		if (albumTracks.size() > number) {
+			trackToRemove = albumTracks.get(number - 1);
+			trackDao.deleteTrack(trackToRemove);
+		} else {
+			// no such track, error status & message?
+		}
+		return trackToRemove;
+	}
+	
 	/**
 	 * Simple data transfer object for adding tracks.
 	 * 

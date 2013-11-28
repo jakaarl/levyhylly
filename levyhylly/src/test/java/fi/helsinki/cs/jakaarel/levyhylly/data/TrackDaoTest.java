@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -22,6 +24,7 @@ public class TrackDaoTest extends DatabaseTestCase {
 	private static final String EXISTENT_TRACK_NAME = "Haavemaa (Liberta)";
 	private static final Long EXISTENT_ALBUM_ID = Long.valueOf(1);
 	private static final int EXISTENT_ALBUM_TRACK_COUNT = 13;
+	private static final Long SECOND_EXISTENT_TRACK_ID = Long.valueOf(2);
 
 	private TrackDao trackDao;
 
@@ -60,6 +63,18 @@ public class TrackDaoTest extends DatabaseTestCase {
 		Track track = new Track(EXISTENT_TRACK_ID, EXISTENT_TRACK_NUMBER, EXISTENT_TRACK_NAME, null, null);
 		Track deletedTrack = trackDao.deleteTrack(track);
 		assertSame(deletedTrack, track);
+	}
+	
+	@Test
+	public void shouldDecrementTrackNumbersOnDelete() {
+		Track track = new Track(
+				EXISTENT_TRACK_ID, EXISTENT_TRACK_NUMBER, EXISTENT_TRACK_NAME, null, EXISTENT_ALBUM_ID);
+		trackDao.deleteTrack(track);
+		List<Track> remainingTracks = trackDao.findTrackByAlbumId(track.getAlbumId());
+		assertEquals(EXISTENT_ALBUM_TRACK_COUNT - 1, remainingTracks.size());
+		Track firstTrack = remainingTracks.get(0);
+		assertEquals(1, firstTrack.getNumber().intValue());
+		assertEquals(SECOND_EXISTENT_TRACK_ID, firstTrack.getId());
 	}
 	
 	@Test
