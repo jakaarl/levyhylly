@@ -35,7 +35,8 @@ public class SearchController {
 	ArtistDao artistDao;
 
 	/**
-	 * Handles search requests.
+	 * Handles search requests. Delegates to {@link #handleSearchAlbums(String)} or
+	 * {@link #handleSearchArtists(String)}, depending on the search button clicked.
 	 * 
 	 * @param searchTerm	search term.
 	 * @param submitButton	submit button, determines if searching by artist or album.
@@ -53,6 +54,13 @@ public class SearchController {
 		return mav;
 	}
 
+	/**
+	 * Searches artists.
+	 *  
+	 * @param artist	artist name or part of it.
+	 * 
+	 * @return	a view displaying results.
+	 */
 	ModelAndView handleSearchArtists(String artist) {
 		ModelAndView mav = new ModelAndView(ARTIST_RESULTS_VIEW);
 		List<Artist> results = artistDao.findArtistsByNameLike(artist);
@@ -62,6 +70,13 @@ public class SearchController {
 		return mav;
 	}
 
+	/**
+	 * Searches albums.
+	 * 
+	 * @param album	album name or part of it.
+	 * 
+	 * @return	a view displaying search results.
+	 */
 	ModelAndView handleSearchAlbums(String album) {
 		ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
 		List<Album> results = albumDao.findAlbumByNameLike(album);
@@ -71,6 +86,13 @@ public class SearchController {
 		return mav;
 	}
 
+	/**
+	 * Displays artist albums.
+	 * 
+	 * @param artistId	artist identifier.
+	 * 
+	 * @return	a view displaying all albums for the artist.
+	 */
 	@RequestMapping(value = "/artistAlbums", method = RequestMethod.GET)
 	public ModelAndView handleArtistAlbums(@RequestParam Long artistId) {
 		ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);

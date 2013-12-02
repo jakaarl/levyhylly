@@ -19,20 +19,18 @@
         <input type="text" name="name" size="30" maxLength="128" value="<c:out value="${album.name}"></c:out>"/><br/>
         <label for="year"><fmt:message key="album.yearLabel"/></label>
         <input type="text" name="year" size="5" maxLength="4" value="<c:out value="${album.year}"></c:out>"/><br/>
-        <label for="track"><fmt:message key="album.tracksLabel"/></label>
+        <input type="submit" name="save" value="<fmt:message key="save.album"/>"/><br/>
+        <p><fmt:message key="album.tracksLabel"/></p>
         <ul id="trackListing">
           <div ng-controller="TracksController" ng-init="loadTracks(${album.id})"/>
             <div ng-repeat="track in tracks">
-              <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}} <button type="button" ng-click="removeTrack(track.albumId, track.number)">[x]</button></li>
+              <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}} <button type="button" ng-click="removeTrack(track.albumId, track.number)"><fmt:message key="remove.track"/></button></li>
             </div>
-            
+            <input id="addedTrackName" type="text" placeholder="<fmt:message key="track.name.placeholder"/>" ng-model="editedTrack.name" ng-required="true" size="30" maxLength="128"/>
+            <input id="addedTrackLength" type="number" placeholder="<fmt:message key="track.length.placeholder"/>" ng-model="editedTrack.length" ng-required="true" size="8" maxLength="8"/>
+            <button type="button" ng-click="addTrack(${album.id})"><fmt:message key="add.track"/></button>
           </div>
         </ul>
-        <input id="addedTrackName" type="text" name="addedTrackName" value="" size="30" maxLength="128"/>
-        <input id="addedTrackLength" type="text" name="addedTrackLength" value="" size="8" maxLength="8"/>
-        <button type="button" onClick="addTrack()"><fmt:message key="add.track"/></button>
-        <br/>
-        <input type="submit" name="save" value="<fmt:message key="save.album"/>"/>
       </form>
     </p>
   </body>

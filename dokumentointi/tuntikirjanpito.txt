@@ -48,6 +48,12 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 -- raitojen lisääminen myös korvaa olemassaolevia raitoja
 -- kokeiltu lisääminen ja korvaaminen Postmanilla (UI vaiheessa)
 -- DAO-metodi raidan poistamiselle, testit sille
-- to 28.11. n. 1h
+- to 28.11. n. 2h
 -- raitojen poistaminen
 -- raitojen editoinnin UI (vaiheessa)
+-- luokkakaavion päivittäminen
+-- remove track -sekvenssidiagrammin päivittäminen yksityiskohtaisemmaksi
+-- muutaman puuttuvan doc commentin lisääminen
+- ma 2.12. n. 2h
+-- REST-metodit palauttavat 404, jos olion tunniste on epäkelpo
+-- raitojen lisäämisen UI

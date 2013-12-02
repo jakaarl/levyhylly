@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
@@ -33,12 +35,19 @@ public class AlbumController {
 	/*
 	 * TODO: move all the REST methods to a separate controller for clarity? Or RESTify completely?
 	 */
+	/** Model key for album. */
 	public static final String ALBUM_KEY = "album";
+	/** Model key for tracks. */
 	public static final String TRACKS_KEY = "tracks";
+	/** Model key for artist identifier. */
 	public static final String ALBUM_ARTIST_ID_KEY = "artistId";
+	/** Model key for artist name. */
 	public static final String ALBUM_ARTIST_NAME_KEY = "artistName";
+	/** Model key for album name. */
 	public static final String ALBUM_NAME_KEY = "name";
+	/** View name for album details. */
 	static final String DETAILS_VIEW_NAME = "albumDetails";
+	/** View name for album editor. */
 	static final String EDIT_VIEW_NAME = "albumEditor";
 	private static final Logger LOGGER = Logger.getLogger(AlbumController.class.getName());
 
@@ -139,7 +148,8 @@ public class AlbumController {
 	}
 	
 	/**
-	 * Adds a new track to an album.
+	 * Adds a new track to an album. If the added track has a track number, it will replace
+	 * that track, otherwise it is added after the existing tracks.
 	 * 
 	 * @param albumId	album identifier.
 	 * @param track		track to add.
@@ -150,11 +160,11 @@ public class AlbumController {
 	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody AddedTrack track) {
 		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
 		if (track.number != null) {
-			if (albumTracks.size() > track.number) {
+			if (albumTracks.size() >= track.number) {
 				Track trackToReplace = albumTracks.get(track.number - 1);
 				trackDao.deleteTrack(trackToReplace);
 			} else {
-				// no such track, error status & message?
+				throw new InvalidIdentifierException("No track number " + track.number + " on album: " + albumId);
 			}
 		} else {
 			track.number = new Short((short) (albumTracks.size() + 1));
@@ -162,15 +172,23 @@ public class AlbumController {
 		return trackDao.createTrack(albumId, track.number, track.name, track.length);
 	}
 	
+	/**
+	 * Removes track.
+	 * 
+	 * @param albumId	album identifier.
+	 * @param number	track number.
+	 * 
+	 * @return	the removed track.
+	 */
 	@RequestMapping(value = "/albums/{albumId}/tracks/{number}", method = RequestMethod.DELETE)
 	public @ResponseBody Track removeTrack(@PathVariable Long albumId, @PathVariable Short number) {
 		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
 		Track trackToRemove = null;
-		if (albumTracks.size() > number) {
+		if (albumTracks.size() >= number) {
 			trackToRemove = albumTracks.get(number - 1);
 			trackDao.deleteTrack(trackToRemove);
 		} else {
-			// no such track, error status & message?
+			throw new InvalidIdentifierException("No track number " + number + " on album: " + albumId);
 		}
 		return trackToRemove;
 	}
@@ -182,8 +200,25 @@ public class AlbumController {
 	 *
 	 */
 	public static class AddedTrack {
+		public Long albumId;
 		public Short number;
 		public String name;
 		public Short length;
+	}
+	
+	/**
+	 * An exception indicating an invalid object identifier. Maps to HTTP status 404.
+	 * 
+	 * @author Jani Kaarela (@gmail.com)
+	 */
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	private static class InvalidIdentifierException extends IllegalArgumentException {
+		private static final long serialVersionUID = 1L;
+		private InvalidIdentifierException(Class<?> objectClass, Object identifier) {
+			this("No " + objectClass.getName() + " found by identifier: " + String.valueOf(identifier));
+		}
+		private InvalidIdentifierException(String message) {
+			super(message);
+		}
 	}
 }
