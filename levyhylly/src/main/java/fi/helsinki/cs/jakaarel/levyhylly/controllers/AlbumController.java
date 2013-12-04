@@ -125,12 +125,17 @@ public class AlbumController {
 	@RequestMapping(value = "/saveAlbum", method = RequestMethod.POST)
 	public ModelAndView handleSaveAlbum(@RequestBody MultiValueMap<String, String> formParams) {
 		Long albumId = nullSafeParseLong(formParams.getFirst(ALBUM_KEY));
+		Long artistId = nullSafeParseLong(formParams.getFirst(ALBUM_ARTIST_ID_KEY));
 		String albumName = formParams.getFirst(ALBUM_NAME_KEY);
 		Short albumYear = nullSafeParseShort(formParams.getFirst(ALBUM_YEAR_KEY));
 		if (albumId == null) { // new album
-			String albumArtist = formParams.getFirst(ALBUM_ARTIST_NAME_KEY);
-			Artist artist = artistDao.createArtist(albumArtist);
-			albumId = albumDao.createAlbum(albumName, albumYear, artist.getId()).getId();
+			if (artistId == null) {
+				String albumArtist = formParams.getFirst(ALBUM_ARTIST_NAME_KEY);
+				Artist artist = artistDao.createArtist(albumArtist);
+				artistId = artist.getId();
+			}
+			Album album = albumDao.createAlbum(albumName, albumYear, artistId);
+			albumId = album.getId();
 		} else {
 			// TODO: save name and year
 		}

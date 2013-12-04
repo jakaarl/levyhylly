@@ -7,6 +7,8 @@
   <entry key="search.byArtist">By artist</entry>
   <entry key="search.byAlbum">By album</entry>
   <entry key="search.noResults">Sorry, nothing found.</entry>
+  <entry key="search.resultsByArtist">Albums found by artist</entry>
+  <entry key="search.resultsByAlbum">Albums found by name</entry>
   <entry key="create.album">Create album</entry>
   <entry key="edit.album">Edit album</entry>
   <entry key="save.album">Save album</entry>

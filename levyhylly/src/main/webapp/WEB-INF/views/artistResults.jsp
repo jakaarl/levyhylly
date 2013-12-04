@@ -8,10 +8,19 @@
   <body>
     <jsp:include page="../includes/header.jsp"/>
     <p>
-    <c:if test="${empty resultArtists}"><fmt:message key="search.noResults"/></c:if>
-    <c:forEach var="artist" items="${resultArtists}">
-      <a href="artistAlbums?artistId=${artist.id}" class="artist">${artist.name}</a>
-    </c:forEach>
+    <c:if test="${not empty searchTerm}">
+     <fmt:message key="search.resultsByArtist"/>: <c:out value="${searchTerm}"></c:out>
+    </c:if>
+    <c:choose>
+     <c:when test="${empty resultArtists}"><fmt:message key="search.noResults"/></c:when>
+     <c:otherwise>
+      <ul>
+       <c:forEach var="artist" items="${resultArtists}">
+       <li><a href="artistAlbums?artistId=${artist.id}" class="artist">${artist.name}</a></li>
+       </c:forEach>
+      </ul>
+     </c:otherwise>
+    </c:choose>
     </p>
   </body>
 </html>

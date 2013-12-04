@@ -28,6 +28,9 @@ public class SearchController {
 	static final String ALBUM_RESULTS_VIEW = "albumResults";
 	private static final String BY_ARTIST_BUTTON = "byArtist";
 	private static final String BY_ALBUM_BUTTON = "byAlbum";
+	private static final String SEARCH_TERM_KEY = "searchTerm";
+	private static final String ARTIST_ID_KEY = "artistId";
+	private static final String ARTIST_NAME_KEY = "artistName";
 
 	private @Autowired
 	AlbumDao albumDao;
@@ -63,6 +66,7 @@ public class SearchController {
 	 */
 	ModelAndView handleSearchArtists(String artist) {
 		ModelAndView mav = new ModelAndView(ARTIST_RESULTS_VIEW);
+		mav.addObject(SEARCH_TERM_KEY, artist);
 		List<Artist> results = artistDao.findArtistsByNameLike(artist);
 		if (!results.isEmpty()) {
 			mav.addObject(ARTIST_RESULTS_KEY, results);
@@ -79,6 +83,7 @@ public class SearchController {
 	 */
 	ModelAndView handleSearchAlbums(String album) {
 		ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
+		mav.addObject(SEARCH_TERM_KEY, album);
 		List<Album> results = albumDao.findAlbumByNameLike(album);
 		if (!results.isEmpty()) {
 			mav.addObject(ALBUM_RESULTS_KEY, results);
@@ -96,6 +101,9 @@ public class SearchController {
 	@RequestMapping(value = "/artistAlbums", method = RequestMethod.GET)
 	public ModelAndView handleArtistAlbums(@RequestParam Long artistId) {
 		ModelAndView mav = new ModelAndView(ALBUM_RESULTS_VIEW);
+		Artist artist = artistDao.loadArtist(artistId);
+		mav.addObject(ARTIST_ID_KEY, artist.getId());
+		mav.addObject(ARTIST_NAME_KEY, artist.getName());
 		List<Album> results = albumDao.findAlbumByArtistId(artistId);
 		if (!results.isEmpty()) {
 			mav.addObject(ALBUM_RESULTS_KEY, results);
