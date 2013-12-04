@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 
 /**
@@ -43,6 +44,20 @@ public class ArtistDaoTest extends DatabaseTestCase {
 		Artist artist = artistDao.loadArtist(EXISTENT_ARTIST_ID);
 		assertNotNull(artist);
 		assertEquals(EXISTENT_ARTIST_NAME, artist.getName());
+	}
+	
+	@Test
+	public void shouldCreateArtist() {
+		String artistName = NON_EXISTENT_ARTIST_NAME;
+		Artist artist = artistDao.createArtist(artistName);
+		assertNotNull(artist);
+		assertNotNull(artist.getId());
+		assertEquals(NON_EXISTENT_ARTIST_NAME, artist.getName());
+	}
+	
+	@Test(expected = DuplicateKeyException.class)
+	public void shouldFailToCreateArtistWithConflictingName() {
+		artistDao.createArtist(EXISTENT_ARTIST_NAME);
 	}
 
 	@Test

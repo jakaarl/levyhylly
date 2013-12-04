@@ -11,16 +11,17 @@
     <jsp:include page="../includes/header.jsp"/>
     <p>
       <form id="albumForm" action="saveAlbum" method="POST">
-        <input type="hidden" name="artistId" value="${artistId}"/>
-        <input type="hidden" name="albumId" value="${album.id}"/>
+        <input type="hidden" name="artistId" value="<c:out value="${artistId}"></c:out>"/>
+        <input type="hidden" name="albumId" value="<c:out value="${album.id}"></c:out>"/>
         <label for="artist"><fmt:message key="album.artistLabel"/></label>
-        <input type="text" name="artist" size="30" maxLength="128" disabled="disabled" value="<c:out value="${artistName}"/>"/><br/>
+        <input type="text" name="artistName" size="30" maxLength="128"<c:if test="${not empty artistId}"> disabled="disabled"</c:if> value="<c:out value="${artistName}"></c:out>"/><br/>
         <label for="name"><fmt:message key="album.nameLabel"/></label>
         <input type="text" name="name" size="30" maxLength="128" value="<c:out value="${album.name}"></c:out>"/><br/>
         <label for="year"><fmt:message key="album.yearLabel"/></label>
         <input type="text" name="year" size="5" maxLength="4" value="<c:out value="${album.year}"></c:out>"/><br/>
         <input type="submit" name="save" value="<fmt:message key="save.album"/>"/><br/>
         <p><fmt:message key="album.tracksLabel"/></p>
+       <c:if test="${not empty album.id}">
         <ul id="trackListing">
           <div ng-controller="TracksController" ng-init="loadTracks(${album.id})"/>
             <div ng-repeat="track in tracks">
@@ -31,6 +32,7 @@
             <button type="button" ng-click="addTrack(${album.id})"><fmt:message key="add.track"/></button>
           </div>
         </ul>
+       </c:if>
       </form>
     </p>
   </body>

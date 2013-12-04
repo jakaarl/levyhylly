@@ -18,5 +18,27 @@ public class StringHelper {
 	public static String escapeLikeWildcards(String param) {
 		return param.replace("%", "\\%").replace("_", "\\_");
 	}
+	
+	/**
+	 * Parses a <code>Long</code> from given string, unless it is <code>null</code>.
+	 * 
+	 * @param string	string to parse, possibly <code>null</code>.
+	 * 
+	 * @return	<code>null</code> or the parsed <code>Long</code>.
+	 */
+	public static Long nullSafeParseLong(String string) {
+		return (string == null ? null : Long.valueOf(string));
+	}
+	
+	/**
+	 * Parses a <code>Short</code> from given string, unless it is <code>null</code>.
+	 * 
+	 * @param string	string to parse, possibly <code>null</code>.
+	 * 
+	 * @return	<code>null</code> or the parsed <code>Short</code>.
+	 */
+	public static Short nullSafeParseShort(String string) {
+		return (string == null ? null : Short.valueOf(string));
+	}
 
 }

@@ -9,7 +9,8 @@ DROP TABLE user_account IF EXISTS;
 CREATE TABLE artist (
 	id NUMERIC GENERATED ALWAYS AS IDENTITY (START WITH 1),
 	name VARCHAR(128) NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	UNIQUE (name)
 );
 
 DROP INDEX  artist_name_idx IF EXISTS;
@@ -21,7 +22,8 @@ CREATE TABLE album (
 	year SMALLINT,
 	artist_id NUMERIC,
 	PRIMARY KEY (id),
-	FOREIGN KEY (artist_id) REFERENCES artist (id)
+	FOREIGN KEY (artist_id) REFERENCES artist (id),
+	UNIQUE (name, artist_id)
 );
 
 DROP INDEX album_name_idx IF EXISTS;

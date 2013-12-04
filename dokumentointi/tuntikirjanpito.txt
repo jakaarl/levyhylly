@@ -57,3 +57,7 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 - ma 2.12. n. 2h
 -- REST-metodit palauttavat 404, jos olion tunniste on epäkelpo
 -- raitojen lisäämisen UI
+- ke 4.12. n. 2h
+-- artistien ja albumien luonti + testit
+-- pieniä UI-muutoksia
+-- albumeja voi nyt luoda ei-olemassaoleville artisteille

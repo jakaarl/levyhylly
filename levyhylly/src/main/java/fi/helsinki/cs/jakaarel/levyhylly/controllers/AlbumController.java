@@ -1,8 +1,9 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
+import static fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper.nullSafeParseLong;
+import static fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper.nullSafeParseShort;
+
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,17 +40,20 @@ public class AlbumController {
 	public static final String ALBUM_KEY = "album";
 	/** Model key for tracks. */
 	public static final String TRACKS_KEY = "tracks";
+	/** Model key for album identifier. */
+	public static final String ALBUM_ID_KEY = "albumId";
 	/** Model key for artist identifier. */
 	public static final String ALBUM_ARTIST_ID_KEY = "artistId";
 	/** Model key for artist name. */
 	public static final String ALBUM_ARTIST_NAME_KEY = "artistName";
 	/** Model key for album name. */
 	public static final String ALBUM_NAME_KEY = "name";
+	/** Model key for album year. */
+	public static final String ALBUM_YEAR_KEY = "year";
 	/** View name for album details. */
 	static final String DETAILS_VIEW_NAME = "albumDetails";
 	/** View name for album editor. */
 	static final String EDIT_VIEW_NAME = "albumEditor";
-	private static final Logger LOGGER = Logger.getLogger(AlbumController.class.getName());
 
 	private @Autowired
 	AlbumDao albumDao;
@@ -105,11 +109,9 @@ public class AlbumController {
 	@RequestMapping(value = "/editAlbum", method = RequestMethod.GET)
 	public ModelAndView handleEditAlbum(@RequestParam Long albumId) {
 		Album album = albumDao.loadAlbum(albumId);
-		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
 		Long artistId = album.getArtistId();
 		ModelAndView mav = handleCreateAlbum(artistId);
 		mav.addObject(ALBUM_KEY, album);
-		mav.addObject(TRACKS_KEY, tracks);
 		return mav;
 	}
 
@@ -122,16 +124,17 @@ public class AlbumController {
 	 */
 	@RequestMapping(value = "/saveAlbum", method = RequestMethod.POST)
 	public ModelAndView handleSaveAlbum(@RequestBody MultiValueMap<String, String> formParams) {
-		// log submit data, remove when implemented!
-		for (Map.Entry<String, List<String>> entry : formParams.entrySet()) {
-			for (String value : entry.getValue()) {
-				LOGGER.info(entry.getKey() + ": " + value);
-			}
+		Long albumId = nullSafeParseLong(formParams.getFirst(ALBUM_KEY));
+		String albumName = formParams.getFirst(ALBUM_NAME_KEY);
+		Short albumYear = nullSafeParseShort(formParams.getFirst(ALBUM_YEAR_KEY));
+		if (albumId == null) { // new album
+			String albumArtist = formParams.getFirst(ALBUM_ARTIST_NAME_KEY);
+			Artist artist = artistDao.createArtist(albumArtist);
+			albumId = albumDao.createAlbum(albumName, albumYear, artist.getId()).getId();
+		} else {
+			// TODO: save name and year
 		}
-		throw new UnsupportedOperationException("Hang on, we'll get there!");
-		// TODO: save/insert
-		/*Long albumId = Long.valueOf(formParams.getFirst(ALBUM_KEY));
-		return handleAlbumDetails(albumId);*/
+		return handleEditAlbum(albumId);
 	}
 	
 	/**
