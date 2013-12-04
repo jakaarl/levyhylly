@@ -20,25 +20,25 @@ public class StringHelper {
 	}
 	
 	/**
-	 * Parses a <code>Long</code> from given string, unless it is <code>null</code>.
+	 * Parses a <code>Long</code> from given string, unless it is <code>null</code> or empty.
 	 * 
 	 * @param string	string to parse, possibly <code>null</code>.
 	 * 
 	 * @return	<code>null</code> or the parsed <code>Long</code>.
 	 */
 	public static Long nullSafeParseLong(String string) {
-		return (string == null ? null : Long.valueOf(string));
+		return ((string == null || string.isEmpty()) ? null : Long.valueOf(string));
 	}
 	
 	/**
-	 * Parses a <code>Short</code> from given string, unless it is <code>null</code>.
+	 * Parses a <code>Short</code> from given string, unless it is <code>null</code> or empty.
 	 * 
 	 * @param string	string to parse, possibly <code>null</code>.
 	 * 
 	 * @return	<code>null</code> or the parsed <code>Short</code>.
 	 */
 	public static Short nullSafeParseShort(String string) {
-		return (string == null ? null : Short.valueOf(string));
+		return ((string == null || string.isEmpty()) ? null : Short.valueOf(string));
 	}
 
 }
