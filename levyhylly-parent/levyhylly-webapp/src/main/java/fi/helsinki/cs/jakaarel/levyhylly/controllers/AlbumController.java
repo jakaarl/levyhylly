@@ -5,10 +5,17 @@ import static fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper.nullSafeParseS
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,9 +58,11 @@ public class AlbumController {
 	/** Model key for album year. */
 	public static final String ALBUM_YEAR_KEY = "year";
 	/** View name for album details. */
-	static final String DETAILS_VIEW_NAME = "albumDetails";
+	public static final String DETAILS_VIEW_NAME = "albumDetails";
 	/** View name for album editor. */
-	static final String EDIT_VIEW_NAME = "albumEditor";
+	public static final String EDIT_VIEW_NAME = "albumEditor";
+	/** Model key for error messages. */
+	public static final String FORM_ERRORS_KEY = "formErrors";
 
 	private @Autowired
 	AlbumDao albumDao;
@@ -107,7 +116,7 @@ public class AlbumController {
 	 * @return	a <code>ModelAndView</code> for album editing.
 	 */
 	@RequestMapping(value = "/editAlbum", method = RequestMethod.GET)
-	public ModelAndView handleEditAlbum(@RequestParam Long albumId) {
+	public ModelAndView handleEditAlbum(@RequestParam(required = true) Long albumId) {
 		Album album = albumDao.loadAlbum(albumId);
 		Long artistId = album.getArtistId();
 		ModelAndView mav = handleCreateAlbum(artistId);
@@ -123,14 +132,18 @@ public class AlbumController {
 	 * @return	a <code>ModelAndView</code> displaying the edited/created album.
 	 */
 	@RequestMapping(value = "/saveAlbum", method = RequestMethod.POST)
-	public ModelAndView handleSaveAlbum(@RequestBody MultiValueMap<String, String> formParams) {
-		Long albumId = nullSafeParseLong(formParams.getFirst(ALBUM_KEY));
-		Long artistId = nullSafeParseLong(formParams.getFirst(ALBUM_ARTIST_ID_KEY));
-		String albumName = formParams.getFirst(ALBUM_NAME_KEY);
-		Short albumYear = nullSafeParseShort(formParams.getFirst(ALBUM_YEAR_KEY));
+	public ModelAndView handleSaveAlbum(@ModelAttribute @Valid AlbumDetails details) {
+		Long albumId = details.albumId;
+		Long artistId = details.artistId;
+		String albumName = details.name;
+		if (albumName == null || albumName.isEmpty()) {
+			ModelAndView mav = handleCreateAlbum(artistId);
+			mav.addObject("", "");
+		}
+		Short albumYear = details.year;
 		if (albumId == null) { // new album
 			if (artistId == null) {
-				String albumArtist = formParams.getFirst(ALBUM_ARTIST_NAME_KEY);
+				String albumArtist = details.artistName;
 				Artist artist = artistDao.createArtist(albumArtist);
 				artistId = artist.getId();
 			}
@@ -165,7 +178,7 @@ public class AlbumController {
 	 * @return	newly created track, rendered as JSON.
 	 */
 	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST)
-	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody AddedTrack track) {
+	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody @Valid AddedTrack track) {
 		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
 		if (track.number != null) {
 			if (albumTracks.size() >= track.number) {
@@ -202,15 +215,33 @@ public class AlbumController {
 	}
 	
 	/**
+	 * Data transfer object for creating and editing albums.
+	 * 
+	 * @author Jani Kaarela (@gmail.com)
+	 */
+	public static class AlbumDetails {
+		public Long albumId;
+		@NotNull @Size(min=1, max=128)
+		public String name;
+		@Min(1877) @Max(2020)
+		public Short year;
+		public Long artistId;
+		@Size(max=128)
+		public String artistName;
+	}
+	
+	/**
 	 * Simple data transfer object for adding tracks.
 	 * 
 	 * @author Jani Kaarela (@gmail.com)
-	 *
 	 */
 	public static class AddedTrack {
 		public Long albumId;
+		@NotNull @Min(1) @Max(99)
 		public Short number;
+		@NotNull @Size(min=1, max=128)
 		public String name;
+		@Max(4800)
 		public Short length;
 	}
 	

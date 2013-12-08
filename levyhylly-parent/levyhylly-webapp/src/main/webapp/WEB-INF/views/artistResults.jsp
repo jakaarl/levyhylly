@@ -12,7 +12,7 @@
      <fmt:message key="search.resultsByArtist"/>: <c:out value="${searchTerm}"></c:out>
     </c:if>
     <c:choose>
-     <c:when test="${empty resultArtists}"><fmt:message key="search.noResults"/></c:when>
+     <c:when test="${empty resultArtists}"><br/><fmt:message key="search.noResults"/></c:when>
      <c:otherwise>
       <ul>
        <c:forEach var="artist" items="${resultArtists}">

@@ -15,7 +15,7 @@
      <fmt:message key="search.resultsByAlbum"/>: <c:out value="${searchTerm}"></c:out>
     </c:if>
     <c:choose>
-     <c:when test="${empty resultAlbums}"><fmt:message key="search.noResults"/></c:when>
+     <c:when test="${empty resultAlbums}"><br/><fmt:message key="search.noResults"/></c:when>
      <c:otherwise>
       <ul>
       <c:forEach var="album" items="${resultAlbums}">

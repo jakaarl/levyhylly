@@ -20,6 +20,8 @@
         <label for="year"><fmt:message key="album.yearLabel"/></label>
         <input type="text" name="year" size="5" maxLength="4" value="<c:out value="${album.year}"></c:out>"/><br/>
         <input type="submit" name="save" value="<fmt:message key="save.album"/>"/><br/>
+      </form>
+      <form id="trackForm" action="#" method="GET">
         <p><fmt:message key="album.tracksLabel"/></p>
        <c:if test="${not empty album.id}">
         <ul id="trackListing">
