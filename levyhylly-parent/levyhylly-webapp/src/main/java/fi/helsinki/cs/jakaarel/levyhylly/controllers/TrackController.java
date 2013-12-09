@@ -1,7 +1,10 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -11,6 +14,7 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,6 +108,23 @@ public class TrackController {
 		public String name;
 		@Max(4800)
 		public Short length;
+	}
+	
+	/**
+	 * Exception handler for validation errors.
+	 * 
+	 * @param validationException	validation exception to be handled.
+	 * 
+	 * @return	list of validation error messages.
+	 */
+	@ExceptionHandler(ConstraintViolationException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	private @ResponseBody List<String> validationError(ConstraintViolationException validationException) {
+		List<String> errors = new ArrayList<String>();
+		for (ConstraintViolation<?> violation : validationException.getConstraintViolations()) {
+			errors.add(violation.getMessage());
+		}
+		return errors;
 	}
 	
 	/**
