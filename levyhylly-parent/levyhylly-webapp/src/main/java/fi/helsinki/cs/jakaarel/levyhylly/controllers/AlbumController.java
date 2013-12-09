@@ -1,8 +1,5 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
-import static fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper.nullSafeParseLong;
-import static fi.helsinki.cs.jakaarel.levyhylly.util.StringHelper.nullSafeParseShort;
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,17 +9,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
@@ -40,9 +31,6 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.TrackDao;
 @Controller
 public class AlbumController {
 
-	/*
-	 * TODO: move all the REST methods to a separate controller for clarity? Or RESTify completely?
-	 */
 	/** Model key for album. */
 	public static final String ALBUM_KEY = "album";
 	/** Model key for tracks. */
@@ -83,6 +71,7 @@ public class AlbumController {
 		ModelAndView mav = new ModelAndView(DETAILS_VIEW_NAME);
 		Album album = albumDao.loadAlbum(albumId);
 		Artist artist = artistDao.loadArtist(album.getArtistId());
+		// TODO: load async using the REST method in TrackController?
 		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
 		mav.addObject(ALBUM_KEY, album);
 		mav.addObject(ALBUM_ARTIST_NAME_KEY, artist.getName());
@@ -156,108 +145,58 @@ public class AlbumController {
 	}
 	
 	/**
-	 * Fetches track listing for given album.
-	 * 
-	 * @param albumId	album identifier.
-	 * 
-	 * @return	album tracks, rendered as JSON.
-	 */
-	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.GET)
-	public @ResponseBody List<Track> loadTracks(@PathVariable Long albumId) {
-		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
-		return tracks;
-	}
-	
-	/**
-	 * Adds a new track to an album. If the added track has a track number, it will replace
-	 * that track, otherwise it is added after the existing tracks.
-	 * 
-	 * @param albumId	album identifier.
-	 * @param track		track to add.
-	 * 
-	 * @return	newly created track, rendered as JSON.
-	 */
-	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST)
-	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody @Valid AddedTrack track) {
-		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
-		if (track.number != null) {
-			if (albumTracks.size() >= track.number) {
-				Track trackToReplace = albumTracks.get(track.number - 1);
-				trackDao.deleteTrack(trackToReplace);
-			} else {
-				throw new InvalidIdentifierException("No track number " + track.number + " on album: " + albumId);
-			}
-		} else {
-			track.number = new Short((short) (albumTracks.size() + 1));
-		}
-		return trackDao.createTrack(albumId, track.number, track.name, track.length);
-	}
-	
-	/**
-	 * Removes track.
-	 * 
-	 * @param albumId	album identifier.
-	 * @param number	track number.
-	 * 
-	 * @return	the removed track.
-	 */
-	@RequestMapping(value = "/albums/{albumId}/tracks/{number}", method = RequestMethod.DELETE)
-	public @ResponseBody Track removeTrack(@PathVariable Long albumId, @PathVariable Short number) {
-		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
-		Track trackToRemove = null;
-		if (albumTracks.size() >= number) {
-			trackToRemove = albumTracks.get(number - 1);
-			trackDao.deleteTrack(trackToRemove);
-		} else {
-			throw new InvalidIdentifierException("No track number " + number + " on album: " + albumId);
-		}
-		return trackToRemove;
-	}
-	
-	/**
 	 * Data transfer object for creating and editing albums.
 	 * 
 	 * @author Jani Kaarela (@gmail.com)
 	 */
 	public static class AlbumDetails {
-		public Long albumId;
+		private Long albumId;
 		@NotNull @Size(min=1, max=128)
-		public String name;
+		private String name;
 		@Min(1877) @Max(2020)
-		public Short year;
-		public Long artistId;
+		private Short year;
+		private Long artistId;
 		@Size(max=128)
-		public String artistName;
-	}
-	
-	/**
-	 * Simple data transfer object for adding tracks.
-	 * 
-	 * @author Jani Kaarela (@gmail.com)
-	 */
-	public static class AddedTrack {
-		public Long albumId;
-		@NotNull @Min(1) @Max(99)
-		public Short number;
-		@NotNull @Size(min=1, max=128)
-		public String name;
-		@Max(4800)
-		public Short length;
-	}
-	
-	/**
-	 * An exception indicating an invalid object identifier. Maps to HTTP status 404.
-	 * 
-	 * @author Jani Kaarela (@gmail.com)
-	 */
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	private static class InvalidIdentifierException extends IllegalArgumentException {
-		private static final long serialVersionUID = 1L;
-		private InvalidIdentifierException(Class<?> objectClass, Object identifier) {
-			this("No " + objectClass.getName() + " found by identifier: " + String.valueOf(identifier));
+		private String artistName;
+		
+		public Long getAlbumId() {
+			return albumId;
 		}
-		private InvalidIdentifierException(String message) {
-			super(message);
+		
+		public void setAlbumId(Long albumId) {
+			this.albumId = albumId;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public Short getYear() {
+			return year;
+		}
+		
+		public void setYear(Short year) {
+			this.year = year;
+		}
+		
+		public Long getArtistId() {
+			return artistId;
+		}
+		
+		public void setArtistId(Long artistId) {
+			this.artistId = artistId;
+		}
+		
+		public String getArtistName() {
+			return artistName;
+		}
+		
+		public void setArtistName(String artistName) {
+			this.artistName = artistName;
 		}
 	}
 }
