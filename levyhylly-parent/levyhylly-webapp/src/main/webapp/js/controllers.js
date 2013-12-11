@@ -5,21 +5,20 @@ controllersModule.controller('TracksController', function($scope, $timeout, Trac
   $scope.tracks = [];
   $scope.editedTrack = new Track();
   $scope.loadTracks = function(albumId) {
-    $scope.tracks = Track.query({ 'albumId': albumId });
+    Track.query({ 'albumId': albumId }, function(response) {
+      $scope.tracks = response.resource;
+    });
   };
   $scope.addTrack = function(albumId) {
     $scope.editedTrack.albumId = albumId;
-    $scope.editedTrack.$save();
-    $timeout(function() {
+    $scope.editedTrack.$save({}, function(response) {
       $scope.loadTracks(albumId);
-    }, 500);
-    $scope.editedTrack = new Track();
+      $scope.editedTrack = new Track();
+    });
   };
   $scope.removeTrack = function(albumId, number) {
-    var track = new Track({'albumId': albumId, 'number': number});
-    track.$remove();
-    $timeout(function() {
+    Track.$remove({'albumId': albumId, 'number': number}, function(response) {
       $scope.loadTracks(albumId);
-    }, 500); // delay so that list isn't rendered prematurely (TODO: deferred update)
+    });
   };
 });
