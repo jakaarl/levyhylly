@@ -61,3 +61,8 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 -- artistien ja albumien luonti + testit
 -- pieniä UI-muutoksia
 -- albumeja voi nyt luoda
+- ma 9.12. ja ke 11.12. yht. n. 4h
+-- raitojen lisääminen/poistaminen omaan controlleriin
+-- syötteiden validointi (vaiheessa)
+-- REST-operaatiot käyttävät callbackeja timeouttien sijaan
+
