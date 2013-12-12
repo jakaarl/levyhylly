@@ -7,7 +7,7 @@
   </head>
   <body>
     <jsp:include page="../includes/header.jsp"/>
-    <p>${artistName}: ${album.name} (${album.year})</p>
+    <p>${albumDetails.artistName}: ${albumDetails.name} (${albumDetails.year})</p>
     <p>
     <c:if test="${not empty tracks}">
       <ul>
@@ -16,7 +16,7 @@
       </c:forEach>
       </ul>
     </c:if>
-    <a href="editAlbum?albumId=${album.id}"><fmt:message key="edit.album"/></a>
+    <a href="editAlbum?albumId=${albumDetails.albumId}"><fmt:message key="edit.album"/></a>
     </p>
   </body>
 </html>

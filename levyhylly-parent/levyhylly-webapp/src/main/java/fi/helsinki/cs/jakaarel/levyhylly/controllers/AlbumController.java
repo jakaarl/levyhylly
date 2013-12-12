@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,19 +34,10 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.TrackDao;
 public class AlbumController {
 
 	/** Model key for album. */
-	public static final String ALBUM_KEY = "album";
+	public static final String ALBUM_DETAILS_KEY = "albumDetails";
 	/** Model key for tracks. */
 	public static final String TRACKS_KEY = "tracks";
-	/** Model key for album identifier. */
-	public static final String ALBUM_ID_KEY = "albumId";
-	/** Model key for artist identifier. */
-	public static final String ALBUM_ARTIST_ID_KEY = "artistId";
-	/** Model key for artist name. */
-	public static final String ALBUM_ARTIST_NAME_KEY = "artistName";
-	/** Model key for album name. */
-	public static final String ALBUM_NAME_KEY = "name";
-	/** Model key for album year. */
-	public static final String ALBUM_YEAR_KEY = "year";
+	
 	/** View name for album details. */
 	public static final String DETAILS_VIEW_NAME = "albumDetails";
 	/** View name for album editor. */
@@ -74,10 +64,8 @@ public class AlbumController {
 		ModelAndView mav = new ModelAndView(DETAILS_VIEW_NAME);
 		Album album = albumDao.loadAlbum(albumId);
 		Artist artist = artistDao.loadArtist(album.getArtistId());
-		// TODO: load async using the REST method in TrackController?
 		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
-		mav.addObject(ALBUM_KEY, album);
-		mav.addObject(ALBUM_ARTIST_NAME_KEY, artist.getName());
+		mav.addObject(ALBUM_DETAILS_KEY, new AlbumDetails(album, artist));
 		mav.addObject(TRACKS_KEY, tracks);
 		return mav;
 	}
@@ -92,10 +80,12 @@ public class AlbumController {
 	@RequestMapping(value = "/createAlbum", method = RequestMethod.GET)
 	public ModelAndView handleCreateAlbum(@RequestParam(required = false) Long artistId) {
 		ModelAndView mav = new ModelAndView(EDIT_VIEW_NAME);
+		AlbumDetails albumDetails = new AlbumDetails();
+		mav.addObject(ALBUM_DETAILS_KEY, albumDetails);
 		if (artistId != null) {
 			Artist artist = artistDao.loadArtist(artistId);
-			mav.addObject(ALBUM_ARTIST_ID_KEY, artistId);
-			mav.addObject(ALBUM_ARTIST_NAME_KEY, artist.getName());
+			albumDetails.setArtistId(artist.getId());
+			albumDetails.setArtistName(artist.getName());
 		}
 		return mav;
 	}
@@ -110,9 +100,10 @@ public class AlbumController {
 	@RequestMapping(value = "/editAlbum", method = RequestMethod.GET)
 	public ModelAndView handleEditAlbum(@RequestParam(required = true) Long albumId) {
 		Album album = albumDao.loadAlbum(albumId);
-		Long artistId = album.getArtistId();
-		ModelAndView mav = handleCreateAlbum(artistId);
-		mav.addObject(ALBUM_KEY, album);
+		Artist artist = artistDao.loadArtist(album.getArtistId());
+		ModelAndView mav = new ModelAndView(EDIT_VIEW_NAME);
+		AlbumDetails albumDetails = new AlbumDetails(album, artist);
+		mav.addObject(ALBUM_DETAILS_KEY, albumDetails);
 		return mav;
 	}
 
@@ -128,12 +119,8 @@ public class AlbumController {
 		if (bindingResult.hasErrors()) {
 			ModelAndView mav = new ModelAndView(EDIT_VIEW_NAME);
 			Map<String,Object> model = bindingResult.getModel();
-			System.out.println("* * * MODEL BEGIN * * *");
-			for (Map.Entry<String, Object> entry : model.entrySet()) {
-				System.out.println(entry.getKey() + " -> " + entry.getValue());
-			}
-			System.out.println("* * * MODEL END * * *");
 			mav.addAllObjects(model);
+			mav.addObject(ALBUM_DETAILS_KEY, details);
 			return mav;
 		}
 		Long albumId = details.albumId;
@@ -149,7 +136,8 @@ public class AlbumController {
 			Album album = albumDao.createAlbum(albumName, albumYear, artistId);
 			albumId = album.getId();
 		} else {
-			// TODO: save name and year
+			Album albumToUpdate = new Album(albumId, albumName, albumYear, artistId);
+			albumDao.updateAlbum(albumToUpdate);
 		}
 		return handleEditAlbum(albumId);
 	}
@@ -168,6 +156,18 @@ public class AlbumController {
 		private Long artistId;
 		@NotNull @Size(min=1, max=128)
 		private String artistName;
+		
+		public AlbumDetails() {
+			// create blank instance
+		}
+		
+		private AlbumDetails(Album album, Artist artist) {
+			this.albumId = album.getId();
+			this.name = album.getName();
+			this.year = album.getYear();
+			this.artistId = artist.getId();
+			this.artistName = artist.getName();
+		}
 		
 		public Long getAlbumId() {
 			return albumId;

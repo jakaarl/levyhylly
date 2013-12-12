@@ -14,9 +14,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 
 /**
+ * Tests for {@link AlbumDao}.
  * 
  * @author Jani Kaarela
- * 
  */
 public class AlbumDaoTest extends DatabaseTestCase {
 
@@ -71,6 +71,17 @@ public class AlbumDaoTest extends DatabaseTestCase {
 		albumDao.createAlbum(NON_EXISTENT_ALBUM_NAME, NON_EXISTENT_ALBUM_YEAR, NON_EXISTENT_ARTIST_ID);
 	}
 
+	@Test
+	public void shouldUpdateAlbum() {
+		String newName = NON_EXISTENT_ALBUM_NAME;
+		Short newYear = NON_EXISTENT_ALBUM_YEAR;
+		Album albumWithUpdates = new Album(EXISTENT_ALBUM_ID, newName, newYear, EXISTENT_ARTIST_ID);
+		albumDao.updateAlbum(albumWithUpdates);
+		Album loadedAlbum = albumDao.loadAlbum(EXISTENT_ALBUM_ID);
+		assertEquals(newName, loadedAlbum.getName());
+		assertEquals(newYear, loadedAlbum.getYear());
+	}
+	
 	@Test
 	public void findAlbumByArtistIdShouldReturnEmpty() {
 		List<Album> albums = albumDao.findAlbumByArtistId(NON_EXISTENT_ARTIST_ID);

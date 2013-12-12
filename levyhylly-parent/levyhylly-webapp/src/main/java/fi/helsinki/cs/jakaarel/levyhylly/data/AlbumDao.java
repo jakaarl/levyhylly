@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -35,6 +36,7 @@ public class AlbumDao extends JdbcDaoSupport {
 
 	private static final String LOAD_QUERY = "SELECT id, name, year, artist_id FROM album WHERE id = ?";
 	private static final String CREATE_STATEMENT = "INSERT INTO album (name, year, artist_id) VALUES (?, ?, ?)";
+	private static final String UPDATE_STATEMENT = "UPDATE album SET name = ?, year = ? WHERE id = ?";
 	private static final String FIND_BY_ARTIST_ID_QUERY = "SELECT id, name, year, artist_id FROM album WHERE artist_id = ? ORDER BY year";
 	private static final String FIND_BY_ALBUM_NAME_QUERY = "SELECT id, name, year, artist_id FROM album WHERE LOWER(name) LIKE ? ORDER BY name, year";
 
@@ -74,7 +76,11 @@ public class AlbumDao extends JdbcDaoSupport {
 				PreparedStatement preparedStatement = connection.prepareStatement(
 						CREATE_STATEMENT, Statement.RETURN_GENERATED_KEYS);
 				preparedStatement.setString(1, name);
-				preparedStatement.setShort(2, year);
+				if (year != null) {
+					preparedStatement.setShort(2, year);
+				} else {
+					preparedStatement.setNull(2, Types.SMALLINT);
+				}
 				preparedStatement.setLong(3, artistId);
 				return preparedStatement;
 			}
@@ -84,6 +90,17 @@ public class AlbumDao extends JdbcDaoSupport {
 		Long albumId = new Long(keyHolder.getKey().longValue());
 		Album album = new Album(albumId, name, year, artistId);
 		return album;
+	}
+	
+	/**
+	 * Updates the given album. Notice, that only name and year are updated.
+	 * 
+	 * @param album	album to update.
+	 * 
+	 * @throws DataAccessException	if the update fails.
+	 */
+	public void updateAlbum(final Album album) throws DataAccessException {
+		getJdbcTemplate().update(UPDATE_STATEMENT, new Object[] { album.getName(), album.getYear(), album.getId() });
 	}
 
 	/**
