@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +59,7 @@ public class TrackController {
 	 * 
 	 * @return	newly created track, rendered as JSON.
 	 */
-	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST)
+	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody @Valid AddedTrack track) {
 		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
 		if (track.number != null) {

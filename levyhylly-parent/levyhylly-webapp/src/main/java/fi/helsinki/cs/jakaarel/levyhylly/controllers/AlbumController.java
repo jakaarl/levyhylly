@@ -1,6 +1,7 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -10,6 +11,8 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -121,14 +124,21 @@ public class AlbumController {
 	 * @return	a <code>ModelAndView</code> displaying the edited/created album.
 	 */
 	@RequestMapping(value = "/saveAlbum", method = RequestMethod.POST)
-	public ModelAndView handleSaveAlbum(@ModelAttribute @Valid AlbumDetails details) {
+	public ModelAndView handleSaveAlbum(@ModelAttribute @Valid AlbumDetails details, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			ModelAndView mav = new ModelAndView(EDIT_VIEW_NAME);
+			Map<String,Object> model = bindingResult.getModel();
+			System.out.println("* * * MODEL BEGIN * * *");
+			for (Map.Entry<String, Object> entry : model.entrySet()) {
+				System.out.println(entry.getKey() + " -> " + entry.getValue());
+			}
+			System.out.println("* * * MODEL END * * *");
+			mav.addAllObjects(model);
+			return mav;
+		}
 		Long albumId = details.albumId;
 		Long artistId = details.artistId;
 		String albumName = details.name;
-		if (albumName == null || albumName.isEmpty()) {
-			ModelAndView mav = handleCreateAlbum(artistId);
-			mav.addObject("", "");
-		}
 		Short albumYear = details.year;
 		if (albumId == null) { // new album
 			if (artistId == null) {
@@ -156,7 +166,7 @@ public class AlbumController {
 		@Min(1877) @Max(2020)
 		private Short year;
 		private Long artistId;
-		@Size(max=128)
+		@NotNull @Size(min=1, max=128)
 		private String artistName;
 		
 		public Long getAlbumId() {
