@@ -4,9 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!doctype html>
 <html>
-  <head>
-    <title><fmt:message key="app.title"/></title>
-  </head>
+  <jsp:include page="../includes/head.jsp"/>
   <body ng-app="levyhylly">
     <jsp:include page="../includes/header.jsp"/>
     <p>
@@ -14,11 +12,11 @@
         <form:hidden path="artistId"/>
         <form:hidden path="albumId"/>
         <label for="artist"><fmt:message key="album.artistLabel"/></label>
-        <form:input path="artistName" size="30" maxLength="128" readonly="${not empty albumDetails.artistId}" /> <form:errors path="artistName"/><br/>
+        <form:input path="artistName" size="30" maxLength="128" readonly="${not empty albumDetails.artistId}" /> <form:errors path="artistName" cssClass="errMessage"/><br/>
         <label for="name"><fmt:message key="album.nameLabel"/></label>
-        <form:input path="name" size="30" maxLength="128" /> <form:errors path="name"/><br/>
+        <form:input path="name" size="30" maxLength="128" /> <form:errors path="name" cssClass="errMessage"/><br/>
         <label for="year"><fmt:message key="album.yearLabel"/></label>
-        <form:input path="year" size="5" maxLength="4"/> <form:errors path="year"/><br/>
+        <form:input path="year" size="5" maxLength="4"/> <form:errors path="year" cssClass="errMessage"/><br/>
         <input type="submit" name="save" value="<fmt:message key="save.album"/>"/><br/>
       </form:form>
       <form id="trackForm" action="#" method="GET">

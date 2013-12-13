@@ -2,9 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
-  <head>
-    <title>Levyhylly</title>
-  </head>
+  <jsp:include page="../includes/head.jsp"/>
   <body>
     <jsp:include page="../includes/header.jsp"/>
     <p>${albumDetails.artistName}: ${albumDetails.name} (${albumDetails.year})</p>

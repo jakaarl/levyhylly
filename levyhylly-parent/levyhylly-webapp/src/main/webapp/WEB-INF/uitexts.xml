@@ -22,4 +22,9 @@
   <entry key="track.length.placeholder">seconds</entry>
   <entry key="add.track">Add track</entry>
   <entry key="remove.track">Remove track</entry>
+  <entry key="Min">Minimum is {1}.</entry>
+  <entry key="Max">Maximum is {1}.</entry>
+  <entry key="NotNull">Required.</entry>
+  <entry key="Size">Required, length {2} to {1} characters.</entry>
+  <entry key="typeMismatch.java.lang.Short">Invalid value, must be a number.</entry>
 </properties>

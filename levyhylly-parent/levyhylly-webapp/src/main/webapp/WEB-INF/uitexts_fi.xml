@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+  <entry key="app.title">Levyhylly</entry>
+  <entry key="home.introduction">Levyhylly on (kehno) levykokoelman hallintasovellus rumalla käyttöliittymällä.</entry>
+  <entry key="search.label">Hae: </entry>
+  <entry key="search.byArtist">Artistilla</entry>
+  <entry key="search.byAlbum">Albumilla</entry>
+  <entry key="search.noResults">Ei hakutuloksia.</entry>
+  <entry key="search.resultsByArtist">Artistilla löytyneet albumit</entry>
+  <entry key="search.resultsByAlbum">Nimellä löytyneet albumit</entry>
+  <entry key="create.album">Luo albumi</entry>
+  <entry key="edit.album">Muokkaa albumia</entry>
+  <entry key="save.album">Tallenna albumi</entry>
+  <entry key="album.artistLabel">Artisti</entry>
+  <entry key="album.nameLabel">Nimi</entry>
+  <entry key="album.yearLabel">Vuosi</entry>
+  <entry key="album.tracksLabel">Kappaleet</entry>
+  <entry key="track.name">Kappaleen nimi</entry>
+  <entry key="track.name.placeholder">kappaleen nimi</entry>
+  <entry key="track.length">Pituus</entry>
+  <entry key="track.length.placeholder">sekunneissa</entry>
+  <entry key="add.track">Lisää kappale</entry>
+  <entry key="remove.track">Poista kappale</entry>
+  <entry key="Min">Pienin sallittu arvo on {1}.</entry>
+  <entry key="Max">Suurin sallittu arvo on {1}.</entry>
+  <entry key="NotNull">Pakollinen.</entry>
+  <entry key="Size">Pakollinen, pituus {2} - {1} merkkiä.</entry>
+  <entry key="typeMismatch.java.lang.Short">Vain numerot sallittu.</entry>
+</properties>
