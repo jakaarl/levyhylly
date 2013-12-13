@@ -5,7 +5,7 @@
 <!doctype html>
 <html>
   <jsp:include page="../includes/head.jsp"/>
-  <body id="ng-app" ng-app="levyhylly">
+  <body>
     <jsp:include page="../includes/header.jsp"/>
     <p>
       <form:form id="albumForm" action="saveAlbum" method="POST" commandName="albumDetails">
@@ -20,10 +20,10 @@
         <input type="submit" name="save" value="<fmt:message key="save.album"/>"/><br/>
       </form:form>
       <form id="trackForm" action="#" method="GET">
-        <p><fmt:message key="album.tracksLabel"/></p>
        <c:if test="${not empty albumDetails.albumId}">
+        <p><fmt:message key="album.tracksLabel"/></p>
         <ul id="trackListing">
-          <div ng-controller="TracksController" ng-init="loadTracks(${albumDetails.albumId})"/>
+          <div id="ng-app" ng-app="levyhylly" ng-controller="TracksController" ng-init="loadTracks(${albumDetails.albumId})"/>
             <div ng-repeat="track in tracks">
               <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}} <button type="button" ng-click="removeTrack(track.albumId, track.number)"><fmt:message key="remove.track"/></button></li>
             </div>

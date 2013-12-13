@@ -13,6 +13,8 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
 import fi.helsinki.cs.jakaarel.levyhylly.data.AlbumDao;
 import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
 import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
+import fi.helsinki.cs.jakaarel.levyhylly.data.Track;
+import fi.helsinki.cs.jakaarel.levyhylly.data.TrackDao;
 
 /**
  * Controller for performing artist and album searches.
@@ -24,10 +26,13 @@ public class SearchController {
 
 	public static final String ARTIST_RESULTS_KEY = "resultArtists";
 	public static final String ALBUM_RESULTS_KEY = "resultAlbums";
-	static final String ARTIST_RESULTS_VIEW = "artistResults";
-	static final String ALBUM_RESULTS_VIEW = "albumResults";
+	public static final String TRACK_RESULTS_KEY = "resultTracks";
+	private static final String ARTIST_RESULTS_VIEW = "artistResults";
+	private static final String ALBUM_RESULTS_VIEW = "albumResults";
+	private static final String TRACK_RESULTS_VIEW = "trackResults";
 	private static final String BY_ARTIST_BUTTON = "byArtist";
 	private static final String BY_ALBUM_BUTTON = "byAlbum";
+	private static final String BY_TRACK_BUTTON = "byTrack";
 	private static final String SEARCH_TERM_KEY = "searchTerm";
 	private static final String ARTIST_ID_KEY = "artistId";
 	private static final String ARTIST_NAME_KEY = "artistName";
@@ -36,6 +41,8 @@ public class SearchController {
 	AlbumDao albumDao;
 	private @Autowired
 	ArtistDao artistDao;
+	private @Autowired
+	TrackDao trackDao;
 
 	/**
 	 * Handles search requests. Delegates to {@link #handleSearchAlbums(String)} or
@@ -53,6 +60,8 @@ public class SearchController {
 			mav = handleSearchArtists(searchTerm);
 		} else if (BY_ALBUM_BUTTON.equals(submitButton)) {
 			mav = handleSearchAlbums(searchTerm);
+		} else if (BY_TRACK_BUTTON.equals(submitButton)) {
+			mav = handleSearchTracks(searchTerm);
 		}
 		return mav;
 	}
@@ -87,6 +96,23 @@ public class SearchController {
 		List<Album> results = albumDao.findAlbumByNameLike(album);
 		if (!results.isEmpty()) {
 			mav.addObject(ALBUM_RESULTS_KEY, results);
+		}
+		return mav;
+	}
+	
+	/**
+	 * Searches tracks.
+	 * 
+	 * @param track	track name or part of it.
+	 * 
+	 * @return	a view displaying search results.
+	 */
+	ModelAndView handleSearchTracks(String track) {
+		ModelAndView mav = new ModelAndView(TRACK_RESULTS_VIEW);
+		mav.addObject(SEARCH_TERM_KEY, track);
+		List<Track> results = trackDao.findTrackByNameLike(track);
+		if (!results.isEmpty()) {
+			mav.addObject(TRACK_RESULTS_KEY, results);
 		}
 		return mav;
 	}

@@ -1,0 +1,28 @@
+title Add Track
+
+Client->TrackController: POST /albums/{albumId}/tracks (async)
+TrackController->TrackDao: createTrack()
+TrackDao->TrackController: returns Track
+TrackController->Client: OK
+Client->TrackController: GET /albums/{albumId}/tracks
+TrackController->TrackDao: findTrackByAlbumId()
+TrackDao->TrackController: returns List<Track>
+TrackController->Client: tracks as JSON
+note left of Client: Client re-renders tracks
+
+(http://www.websequencediagrams.com/?lz=dGl0bGUgQWRkIFRyYWNrCgpDbGllbnQtPgAKBUNvbnRyb2xsZXI6IFBPU1QgL2FsYnVtcy97AAMFSWR9L3RyYWNrcyAoYXN5bmMpCgAoDwBBB0RhbzogY3JlYXRlAGIFKAAiB0RhbwBXE3JldHVybnMAgQsHAEERAIEcBjogT0sAgRMaR0UAgRIaAIEIHGZpbmQAggQFQnlBAIFcBgCBBSZMaXN0PACCPQU-AIEXGgCCJAdhcyBKU09OCm5vdGUgbGVmdCBvZiAAgU0IAIJ5BiByZS1yZW5kZXJzAC8HCg&s=napkin)
+
+title Remove Track
+
+Client->TrackController: DELETE /albums/{albumId}/tracks({trackNumber} (async)
+TrackController->TrackDao: deleteTrack()
+TrackDao->TrackController: returns Track
+TrackController->Client: OK
+Client->TrackController: GET /albums/{albumId}/tracks
+TrackController->TrackDao: findTrackByAlbumId()
+TrackDao->TrackController: returns List<Track>
+TrackController->Client: tracks as JSON
+note left of Client: Client re-renders tracks
+
+(http://www.websequencediagrams.com/?lz=dGl0bGUgUmVtb3ZlIFRyYWNrCgpDbGllbnQtPgAKBUNvbnRyb2xsZXI6IERFTEVURSAvYWxidW1zL3sAAwVJZH0vdHJhY2tzKHsAAwVOdW1iZXJ9IChhc3luYykKADgPAFEHRGFvOiBkZWxldGUAcgUoACIHRGFvAGcTcmV0dXJucwCBGwcAQREAgSwGOiBPSwCBIxpHRVQAgSEZAIEIHGZpbmQAghQFQnlBAIFqBgCBBSZMaXN0PACCTQU-AIEXGgCCMwYgYXMgSlNPTgpub3RlIGxlZnQgb2YgAIFNCACDCQYgcmUtcmVuZGVycwAvBwo&s=napkin)
+

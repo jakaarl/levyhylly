@@ -4,7 +4,7 @@ Johdanto
  
 * Toiminnallisuus
 
- * Kirjautuminen hallinnointikäyttäjäksi
+ * Kirjautuminen hallinnointikäyttäjäksi - EI TOTEUTETTU
  
  * Selaaminen anonyymina (ei kirjautunut käyttäjä)
  
@@ -18,13 +18,13 @@ Johdanto
  
  * Haku artistin, albumin tai kappaleen nimellä
  
- * Artistien, albumien ja kappaleiden lisäys, muokkaus ja poisto (hallinnointikäyttäjä)
+ * Artistien, albumien ja kappaleiden lisäys, muokkaus ja poisto (hallinnointikäyttäjä) - TOTEUTETTU ANONYYMILLE KÄYTTÄJÄLLE
 
 * Lisätoiminnallisuus
 
  Aikabudjetin salliessa voidaan toteuttaa lisätoiminnallisuuksia, kuten:
  
- * Käyttöliittymän kielistäminen
+ * Käyttöliittymän kielistäminen - TOTEUTETTU
  
  * Ei-anonyymit käyttäjät, joilla personointia: kieli, suosikit
  
@@ -38,9 +38,26 @@ Johdanto
  käyttää kehityskantana HSQLDB:tä. Sovellus toteutetaan hyödyntäen Spring MVC:tä
  (versio 3.1.x tai korkeampi).
 
-Käyttötapaukset
-
 Tietomalli
 
-Luokkakaavio
+ Ks. tiedosto: datamalli.png
 
+Luokkakaavio ja sovelluksen rakenne
+
+ Ks. tiedosto: luokkakaavio.png
+
+ Sovelluksen konfiguroi luokka WebAppConfiguration, joka on web.xml:ssä
+ konfiguroitu Spring MVC:n contextConfigLocationiksi. Se puolestaan lataa
+ konfiguraatioluokat DatabaseConfiguration ja BeanConfiguration, sekä
+ ohjeistaa Springin tutkimaan komponenttiannotaatiot controllers- ja
+ data-pakkausten luokista.
+
+ Data-pakkauksessa sijaitsevat sovelluksen tietomallia vastaavat luokat,
+ sekä niiden kunkin tietokantaoperaatiot sisältävät DAO-luokat.
+
+ Controllers-pakkauksessa sijaitsevat palvelimelle lähetetyt pyynnöt
+ käsittelevät controllerit, jotka puolestaan käyttävät data-pakkauksen
+ luokkia tietomallin ja -kannan esittämiseen ja muokkaamiseen. Pyyntöjen
+ käsittelyä kuvaavat sekvenssikaaviot addTrackSeq.png, displayAlbumSeq.png
+ ja removeTrackSeq.png.
+ 

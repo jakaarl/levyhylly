@@ -6,9 +6,11 @@
   <entry key="search.label">Hae: </entry>
   <entry key="search.byArtist">Artistilla</entry>
   <entry key="search.byAlbum">Albumilla</entry>
+  <entry key="search.byTrack">Kappaleella</entry>
   <entry key="search.noResults">Ei hakutuloksia.</entry>
-  <entry key="search.resultsByArtist">Artistilla löytyneet albumit</entry>
-  <entry key="search.resultsByAlbum">Nimellä löytyneet albumit</entry>
+  <entry key="search.resultsByArtist">Löytyneet albumit artistilla</entry>
+  <entry key="search.resultsByAlbum">Löytyneet albumit nimellä</entry>
+  <entry key="search.resultsByTrack">Löytyneet kappaleet nimellä</entry>
   <entry key="create.album">Luo albumi</entry>
   <entry key="edit.album">Muokkaa albumia</entry>
   <entry key="save.album">Tallenna albumi</entry>

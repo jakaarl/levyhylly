@@ -1,6 +1,5 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -22,8 +21,6 @@ import fi.helsinki.cs.jakaarel.levyhylly.data.Album;
 import fi.helsinki.cs.jakaarel.levyhylly.data.AlbumDao;
 import fi.helsinki.cs.jakaarel.levyhylly.data.Artist;
 import fi.helsinki.cs.jakaarel.levyhylly.data.ArtistDao;
-import fi.helsinki.cs.jakaarel.levyhylly.data.Track;
-import fi.helsinki.cs.jakaarel.levyhylly.data.TrackDao;
 
 /**
  * Controller for all things album-related.
@@ -35,8 +32,6 @@ public class AlbumController {
 
 	/** Model key for album. */
 	public static final String ALBUM_DETAILS_KEY = "albumDetails";
-	/** Model key for tracks. */
-	public static final String TRACKS_KEY = "tracks";
 	
 	/** View name for album details. */
 	public static final String DETAILS_VIEW_NAME = "albumDetails";
@@ -49,8 +44,6 @@ public class AlbumController {
 	AlbumDao albumDao;
 	private @Autowired
 	ArtistDao artistDao;
-	private @Autowired
-	TrackDao trackDao;
 
 	/**
 	 * Loads album details and displays them.
@@ -64,9 +57,7 @@ public class AlbumController {
 		ModelAndView mav = new ModelAndView(DETAILS_VIEW_NAME);
 		Album album = albumDao.loadAlbum(albumId);
 		Artist artist = artistDao.loadArtist(album.getArtistId());
-		List<Track> tracks = trackDao.findTrackByAlbumId(albumId);
 		mav.addObject(ALBUM_DETAILS_KEY, new AlbumDetails(album, artist));
-		mav.addObject(TRACKS_KEY, tracks);
 		return mav;
 	}
 
