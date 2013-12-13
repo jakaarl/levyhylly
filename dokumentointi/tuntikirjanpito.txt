@@ -65,4 +65,9 @@ DISCLAIMER: aika-arviot ovat "tehokasta aikaa", eivät "kello-aikaa"
 -- raitojen lisääminen/poistaminen omaan controlleriin
 -- syötteiden validointi (vaiheessa)
 -- REST-operaatiot käyttävät callbackeja timeouttien sijaan
-
+- to 12.12. n. 2h
+-- syötteiden validointi
+- pe 13.12. n. 1h
+-- virheilmoitukset validoinnista
+-- kielistäminen suomeksi
+--- toistaiseksi ei linkkiä, lisää urliin ?lang=fi vaihtaaksesi!
