@@ -5,7 +5,7 @@
 <!doctype html>
 <html>
   <jsp:include page="../includes/head.jsp"/>
-  <body ng-app="levyhylly">
+  <body id="ng-app" ng-app="levyhylly">
     <jsp:include page="../includes/header.jsp"/>
     <p>
       <form:form id="albumForm" action="saveAlbum" method="POST" commandName="albumDetails">
@@ -28,8 +28,9 @@
               <li class="track">{{ track.number }} {{track.name}} {{track.formattedLength}} <button type="button" ng-click="removeTrack(track.albumId, track.number)"><fmt:message key="remove.track"/></button></li>
             </div>
             <input id="addedTrackName" type="text" placeholder="<fmt:message key="track.name.placeholder"/>" ng-model="editedTrack.name" size="30" maxLength="128" ng-required="true"/>
-            <input id="addedTrackLength" type="number" placeholder="<fmt:message key="track.length.placeholder"/>" ng-model="editedTrack.length" size="8" maxLength="8" ng-required="true"/>
-            <button type="button" ng-click="addTrack(${albumDetails.albumId})"><fmt:message key="add.track"/></button>
+            <input id="addedTrackLength" type="number" placeholder="<fmt:message key="track.length.placeholder"/>" ng-model="editedTrack.length" size="8" maxLength="8" min="0" max="4800" ng-required="true"/>
+            <button type="button" ng-click="addTrack(${albumDetails.albumId})"><fmt:message key="add.track"/></button><br/>
+            <div ng-show="editedTrack.hasErrors" class="errMessage"><fmt:message key="track.validationError"/></div>
           </div>
         </ul>
        </c:if>

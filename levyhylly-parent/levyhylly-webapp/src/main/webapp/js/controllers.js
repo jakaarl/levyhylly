@@ -11,9 +11,16 @@ controllersModule.controller('TracksController', function($scope, $timeout, Trac
   };
   $scope.addTrack = function(albumId) {
     $scope.editedTrack.albumId = albumId;
+    delete($scope.editedTrack.hasErrors);
     $scope.editedTrack.$save({}, function() {
       $scope.loadTracks(albumId);
       $scope.editedTrack = new Track();
+    }, function(httpResponse) {
+      if (httpResponse.status == 400) {
+        $scope.editedTrack.hasErrors = true;
+      } else {
+        delete($scope.editedTrack.hasErrors);
+      }
     });
   };
   $scope.removeTrack = function(albumId, trackNumber) {

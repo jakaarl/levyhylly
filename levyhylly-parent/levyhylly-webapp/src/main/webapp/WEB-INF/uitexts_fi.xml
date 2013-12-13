@@ -27,4 +27,5 @@
   <entry key="NotNull">Pakollinen.</entry>
   <entry key="Size">Pakollinen, pituus {2} - {1} merkkiä.</entry>
   <entry key="typeMismatch.java.lang.Short">Vain numerot sallittu.</entry>
+  <entry key="track.validationError">Nimi ja pituus ovat pakollisia, pituus 0-4800 sekuntia.</entry>
 </properties>

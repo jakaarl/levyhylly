@@ -1,9 +1,7 @@
 package fi.helsinki.cs.jakaarel.levyhylly.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -13,7 +11,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,7 +56,7 @@ public class TrackController {
 	 * 
 	 * @return	newly created track, rendered as JSON.
 	 */
-	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/albums/{albumId}/tracks", method = RequestMethod.POST)
 	public @ResponseBody Track addTrack(@PathVariable Long albumId, @RequestBody @Valid AddedTrack track) {
 		List<Track> albumTracks = trackDao.findTrackByAlbumId(albumId);
 		if (track.number != null) {
@@ -107,25 +104,18 @@ public class TrackController {
 		public Short number;
 		@NotNull @Size(min=1, max=128)
 		public String name;
-		@Max(4800)
+		@NotNull @Min(0) @Max(4800)
 		public Short length;
 	}
 	
 	/**
-	 * Exception handler for validation errors.
-	 * 
-	 * @param validationException	validation exception to be handled.
-	 * 
-	 * @return	list of validation error messages.
+	 * Exception handler for validation errors. Maps constraint violation exceptions to
+	 * bad request HTTP status.
 	 */
 	@ExceptionHandler(ConstraintViolationException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	private @ResponseBody List<String> validationError(ConstraintViolationException validationException) {
-		List<String> errors = new ArrayList<String>();
-		for (ConstraintViolation<?> violation : validationException.getConstraintViolations()) {
-			errors.add(violation.getMessage());
-		}
-		return errors;
+	private void validationError() {
+		// no-op, simply maps to 
 	}
 	
 	/**

@@ -27,4 +27,5 @@
   <entry key="NotNull">Required.</entry>
   <entry key="Size">Required, length {2} to {1} characters.</entry>
   <entry key="typeMismatch.java.lang.Short">Invalid value, must be a number.</entry>
+  <entry key="track.validationError">Name and length required, length must be 0 to 4800 seconds.</entry>
 </properties>
